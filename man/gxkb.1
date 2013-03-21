@@ -1,0 +1,66 @@
+.\" man page originally for the Debian/GNU Linux system
+.TH GXKB "1" "March 2015" "gxkb 0.7.5" "User Commands"
+.SH "NAME"
+gxkb \- X11 keyboard indicator and switcher.
+.SH "SYNOPSIS"
+.B gxkb
+.br
+.SH "DESCRIPTION"
+.PP
+gxkb is a little indicator applet which allows one to quickly
+switch between different keyboard layouts in X. A flag
+corresponding to the country of the active layout is shown
+in the indicator area.
+
+The applet is written in C and uses the GTK+ library and
+therefore does not depend on any GNOME components.
+
+.SH "OPTIONS"
+.TP
+.I \-v
+Print the version number of
+.B gxkb
+to the standard output stream and
+list of features that was builded with.
+.TP
+.I \-h
+Print a usage message briefly summarizing these
+command-line options, then exit.
+
+.SH "FILES"
+Full paths below may vary between installations. They are also affected
+by the
+.BR XDG_CONFIG_HOME
+and
+.BR XDG_DATA_HOME
+environment variables.
+.PP
+.I PREFIX/share/gxkb/flags/
+.IP
+Directory with system-wide resources.
+.PP
+.I $XDG_CONFIG_HOME/gxkb/gxkb.cfg
+.IP
+Settings for the gxkb. If $XDG_CONFIG_HOME is either not set or empty,
+a default equal to $HOME/.config/gxkb/gxkb.cfg should be used. The
+configuration file should be created at first run and can be changed
+when gxkb is not running at this time. By the way configuration for
+gxkb can be changed on the fly with \fBsetxkbmap\fR(1) command and
+gxkb will update configuration file at exit.
+.PP
+.I $XDG_DATA_HOME/gxkb/flags
+.IP
+User's own resources to replace flag images from PREFIX/share/gxkb/flags
+directory. If $XDG_DATA_HOME is either not set or empty, a default equal
+to $HOME/.local/share/gxkb/flags should be used.
+
+.SH "AUTHOR"
+gxkb was written by Dmitriy Poltavchenko <admin@linuxhub.ru>.
+This manual page was originally written for the
+Debian GNU/Linux system by Mateusz Łukasik <mati75@linuxmint.pl>.
+.SH "SEE ALSO"
+.SS "Regular Manual Pages"
+\fBxkeyboard-config\fR(7),
+\fBsetxkbmap\fR(1)
+.SS "Home Page"
+https://sf.net/p/gxkb
