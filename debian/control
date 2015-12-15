@@ -1,11 +1,12 @@
 Source: gxkb
 Priority: optional
 Section: x11
-Maintainer: ZEN <zen@root.ua>
-Uploaders: ZEN <zen@root.ua>
+Maintainer: Dmitriy Poltavchenko <admin@linuxhub.ru>
+Uploaders: Dmitriy Poltavchenko <admin@linuxhub.ru>
 Build-Depends: libgtk2.0-0 ( >= 2.12.0 ), libxklavier16 ( >= 3.0 ), libwnck22 ( >= 2.22.0 ),
-  libgtk2.0-dev, libxklavier-dev (>= 5.0), libwnck-dev, debhelper, dh-make, dh-autoreconf
-Standards-Version: 0.6.0
+  libgtk2.0-dev, libxklavier-dev (>= 5.0), libwnck-dev,
+  libappindicator-dev, debhelper, dh-make, dh-autoreconf
+Standards-Version: 0.7.0
 Homepage: https://sourceforge.net/p/gxkb/
 Vcs-Svn: svn://svn.code.sf.net/p/gxkb/svn/trunk
 Vcs-Browser: https://sourceforge.net/p/gxkb/svn/4/tree/
@@ -14,6 +15,6 @@ Package: gxkb
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: X11 keyboard indicator and switcher
- It shows a flag of current keyboard in a systray 
- area and allows you to switch to another one. 
+ It shows a flag of current keyboard in a systray
+ area and allows you to switch to another one.
  It's written in C and uses the GTK library (no GNOME is needed)

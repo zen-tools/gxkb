@@ -1,26 +1,36 @@
+September 08 2014:
+Version gxkb 0.7.0 released.
+  * Added appindicator support
+  * Added auto fallback to classic trayicon when appindicator does not work
+  * Changed default config file location to ~/.config/gxkb/gxkb.cfg
+  * From now user can set up own flags in config directory ( ~/.config/gxkb/flags )
+  * Fixed scroll direction for classic trayicon
+  * Code refactor and minor fixes
+  * Saved ability to build gxkb without the appindicator support (for old systems)
+
 July 10 2013:
 Version gxkb 0.6 released.
   * add comand line options -h -v
   * created gxkb.desktop file for adding a menu item
   * add the Debian packaging files
   * by default installation prefix changed to /usr
-  
+
 March 28 2013:
 Version gxkb 0.5 released.
   * reduced dependence
   * fixed size of image flags layout
-      
+
 March 24 2013:
 Version gxkb 0.4 released.
   * fixed bug in search of the flags when specified any keyboard option
   * fixed bug in search of the flags when keyboard layout has whitespace
-  
+
 March 19 2013:
 Version gxkb 0.3 released.
   * add left-click menu with keyboard layout options
   * add right-click menu with 'exit' and 'about' options
   * add icons
-  
+
 March 18 2013:
 Version gxkb 0.2 released.
 

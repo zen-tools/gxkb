@@ -1,7 +1,7 @@
 /* vim: set backspace=2 ts=4 softtabstop=4 sw=4 cinoptions=>4 expandtab autoindent smartindent: */
 /* xkb-callbacks.h
  *
- * Copyright (C) 2013 Dmitriy Poltavchenko <zen@root.ua>
+ * Copyright (C) 2014 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
@@ -27,32 +27,22 @@
 #   include "config.h"
 #endif
 
-#include <gtk/gtk.h>
 #include <libwnck/libwnck.h>
+#include "xkb-config.h"
 
-#include "common.h"
+void            xkb_active_window_changed       ( WnckScreen *screen,
+                                                  WnckWindow *previously_active_window,
+                                                  t_xkb_settings *xkb );
 
-void            xkb_active_window_changed    (WnckScreen *screen,
-        WnckWindow *previously_active_window,
-        t_xkb *xkb);
+void            xkb_application_closed          ( WnckScreen *screen,
+                                                  WnckApplication *app,
+                                                  t_xkb_settings *xkb );
 
-void            xkb_application_closed       (WnckScreen *screen,
-        WnckApplication *app,
-        t_xkb *xkb);
+void            xkb_window_closed               ( WnckScreen *screen,
+                                                  WnckWindow *window,
+                                                  t_xkb_settings *xkb );
 
-void            xkb_window_closed        (WnckScreen *screen,
-        WnckWindow *window,
-        t_xkb *xkb);
-
-void            xkb_tray_icon_clicked       (GtkStatusIcon *status_icon, gpointer data);
-
-
-gboolean        xkb_tray_icon_scrolled      (GtkStatusIcon *btn,
-        GdkEventScroll *event,
-        gpointer data);
-
-void            xkb_tray_icon_popup_menu           (GtkStatusIcon *status_icon, guint button,
-        guint activate_time, gpointer data);
+void            xkb_about                       ( t_xkb_settings *xkb );
 
 #endif
 

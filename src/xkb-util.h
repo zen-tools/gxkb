@@ -1,7 +1,7 @@
 /* vim: set backspace=2 ts=4 softtabstop=4 sw=4 cinoptions=>4 expandtab autoindent smartindent: */
 /* xkb-util.h
  *
- * Copyright (C) 2013 Dmitriy Poltavchenko <zen@root.ua>
+ * Copyright (C) 2014 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *

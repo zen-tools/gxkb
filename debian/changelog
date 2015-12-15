@@ -1,4 +1,16 @@
-gxkb (0.6) unstable; urgency=low
+gxkb (0.7.0) unstable; urgency=low
+
+  * Added appindicator support
+  * Added auto fallback to classic trayicon when appindicator does not work
+  * Changed default config file location to ~/.config/gxkb/gxkb.cfg
+  * From now user can set up own flags in config directory ( ~/.config/gxkb/flags )
+  * Fixed scroll direction for classic trayicon
+  * Code refactor and minor fixes
+  * Saved ability to build gxkb without the appindicator support (for old systems)
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Mon, 08 Sep 2014 22:57:18 +0300
+
+gxkb (0.6.0) unstable; urgency=low
 
   * add comand line options -h -v
   * created gxkb.desktop file for adding a menu item
