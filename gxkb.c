@@ -103,6 +103,7 @@ xkb_free (t_xkb *xkb)
         kbd_config_free (xkb->settings->kbd_config);
 
     g_free (xkb->settings);
+
     g_object_unref (xkb->tray);
 
     gtk_widget_destroy (xkb->rb_mouse_popup);
@@ -224,7 +225,7 @@ xkb_initialize_menu (t_xkb *xkb)
     gtk_menu_shell_append (GTK_MENU_SHELL (xkb->rb_mouse_popup), mi);
     gtk_widget_show (mi);
 
-    // Left cutton click menu
+    // Left button click menu
     gint i;
     GdkPixbuf *handle = NULL;
     gchar *imgfilename;
@@ -279,18 +280,18 @@ xkb_initialize_menu (t_xkb *xkb)
 void
 xkb_refresh(t_xkb *xkb)
 {
-    gchar *text = xkb_util_get_layout_string (xkb_config_get_group_name (-1),
-                                 xkb_config_get_variant (-1));
-
-    gchar *filepath = xkb_util_get_flag_filename(text);
-    g_free(text);
+    gchar *text = g_strdup(xkb_config_get_group_name (-1));
+    gchar *filepath = g_strdup(xkb_util_get_flag_filename(text));
 
     GdkPixbuf * pixmap = gdk_pixbuf_new_from_file_at_size(filepath, 24, 24, NULL);
+
+    g_free(text);
+    g_free(filepath);
 
     if (!pixmap)
         return;
 
-    gtk_status_icon_set_from_pixbuf(xkb->tray, pixmap);
+     gtk_status_icon_set_from_pixbuf(xkb->tray, pixmap);
 }
 
 void
@@ -341,9 +342,8 @@ int main (int argc, char *argv[])
         }
     }
 
-    if (xkb_config_initialize (xkb->settings, xkb_state_changed, xkb))
+    if (xkb_config_initialize(xkb->settings, xkb_state_changed, xkb))
     {
-        //xkb_config_update_settings(xkb->settings);
         xkb_refresh(xkb);
         xkb_initialize_menu (xkb);
     }
@@ -358,6 +358,7 @@ int main (int argc, char *argv[])
 
     g_free(config_file);
     xkb_free(xkb);
+
     return 0;
 }
 

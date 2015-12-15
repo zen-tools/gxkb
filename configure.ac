@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.3], [zen@root.ua])
+AC_INIT([gxkb], [0.4], [zen@root.ua])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([gxkb.c])
 AC_CONFIG_HEADERS([config.h])

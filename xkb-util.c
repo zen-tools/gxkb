@@ -32,11 +32,16 @@ xkb_util_get_flag_filename (const gchar* group_name)
     if (!group_name)
         return NULL;
 
-    filename = g_strconcat (FLAGSDIR, "/", g_ascii_strdown(group_name, -1), ".png", NULL);
+    gchar *flag_name = g_ascii_strdown(group_name, -1);
+    flag_name = g_strstrip(flag_name);
+
+    filename = g_strconcat (FLAGSDIR, "/", flag_name, ".png", NULL);
+
+    g_free(flag_name);
 
     if (!g_file_test(filename, G_FILE_TEST_EXISTS))
     {
-        filename = g_strconcat (FLAGSDIR, "/", "zz.png", NULL);
+        filename = g_strconcat(FLAGSDIR, "/", "zz.png", NULL);
         if (!g_file_test(filename, G_FILE_TEST_EXISTS))
             return NULL;
     }

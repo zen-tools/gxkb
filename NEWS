@@ -1,3 +1,8 @@
+March 24 2013:
+Version gxkb 0.4 released.
+  * fixed bug in search of the flags when specified any keyboard option
+  * fixed bug in search of the flags when keyboard layout has whitespace
+  
 March 19 2013:
 Version gxkb 0.3 released.
   * add left-click menu with keyboard layout options
