@@ -32,8 +32,13 @@
 gchar*      xkb_util_get_flag_filename      (const gchar* group_name);
 
 gchar*      xkb_util_get_layout_string      (const gchar* group_name,
-        const gchar* variant);
+                                             const gchar* variant);
+
 gchar*      xkb_util_normalize_group_name   (const gchar* group_name);
+
+gchar*      xkb_util_get_config_dir         (void);
+
+gchar*      xkb_util_get_config_file        (void);
 
 #endif
 

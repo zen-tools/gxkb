@@ -351,25 +351,12 @@ int main (int argc, char *argv[])
 
     t_xkb *xkb = xkb_new ();
 
-    char *config_path = (g_getenv("XDG_CONFIG_HOME") == NULL
-                         ? g_build_filename(g_get_home_dir(), ".config", NULL)
-                         : g_strdup(g_getenv("XDG_CONFIG_HOME")));
+    char *config_file = xkb_util_get_config_file();
 
-    char *config_file = g_strconcat(g_build_filename(config_path,
-                                    g_get_application_name(), NULL), ".cfg", NULL);
-
-    if (!g_file_test(config_path, G_FILE_TEST_EXISTS))
+    if(!xkb_load_config(xkb, config_file))
     {
-        g_mkdir_with_parents(config_path, 0700);
         xkb_load_default(xkb);
-    }
-    else
-    {
-        if(!xkb_load_config(xkb, config_file))
-        {
-            xkb_load_default(xkb);
-            xkb_save_config(xkb, config_file);
-        }
+        xkb_save_config(xkb, config_file);
     }
 
     if (xkb_config_initialize(xkb->settings, xkb_state_changed, xkb))
@@ -377,8 +364,6 @@ int main (int argc, char *argv[])
         xkb_refresh(xkb);
         xkb_initialize_menu (xkb);
     }
-
-    g_free(config_path);
 
     /* Enter the main loop */
     gtk_main ();

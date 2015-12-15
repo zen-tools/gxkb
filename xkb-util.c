@@ -28,6 +28,7 @@ gchar*
 xkb_util_get_flag_filename (const gchar* group_name)
 {
     gchar* filename;
+    gchar* filepath;
 
     if (!group_name)
         return NULL;
@@ -35,38 +36,42 @@ xkb_util_get_flag_filename (const gchar* group_name)
     gchar *flag_name = g_ascii_strdown(group_name, -1);
     flag_name = g_strstrip(flag_name);
 
-    filename = g_strconcat (FLAGSDIR, "/", flag_name, ".png", NULL);
-
+    filename = g_strconcat(flag_name, ".png", NULL);
     g_free(flag_name);
 
-    if (!g_file_test(filename, G_FILE_TEST_EXISTS))
+    // Try to get image from user config directory
+    filepath = g_build_filename(xkb_util_get_config_dir(), 
+                                "flags", filename, NULL);
+
+    if (g_file_test(filepath, G_FILE_TEST_EXISTS)) {
+        g_free(filename);
+        return filepath;
+    }
+
+    // Try to get image from system directory
+    filepath = g_build_filename(FLAGSDIR, filename, NULL);
+
+    g_free(filename);
+
+    if (!g_file_test(filepath, G_FILE_TEST_EXISTS))
     {
-        filename = g_strconcat(FLAGSDIR, "/", "zz.png", NULL);
-        if (!g_file_test(filename, G_FILE_TEST_EXISTS))
+        filepath = g_build_filename(FLAGSDIR, "zz.png", NULL);
+        if (!g_file_test(filepath, G_FILE_TEST_EXISTS))
             return NULL;
     }
 
-    return filename;
+    return filepath;
 }
 
 gchar*
 xkb_util_get_layout_string (const gchar *group_name, const gchar *variant)
 {
-    gchar *layout;
-
     if (!group_name)
         return NULL;
 
-    if (variant && strlen (variant) > 0)
-    {
-        layout = g_strconcat (group_name, " (", variant, ")", NULL);
-    }
-    else
-    {
-        layout = g_strconcat (group_name, NULL);
-    }
-
-    return layout;
+    return (variant && strlen (variant) > 0)
+           ? g_strconcat (group_name, " (", variant, ")", NULL)
+           : g_strconcat (group_name, NULL);
 }
 
 gchar*
@@ -106,5 +111,42 @@ xkb_util_normalize_group_name (const gchar* group_name)
     g_free (c);
 
     return result;
+}
+
+gchar*
+xkb_util_get_config_dir (void)
+{
+    gchar *config_path =  (g_getenv("XDG_CONFIG_HOME") == NULL
+            ? g_build_filename(g_get_home_dir(), ".config", NULL)
+            : g_strdup(g_getenv("XDG_CONFIG_HOME"))
+    );
+
+    config_path = g_build_path(
+        "/",
+        config_path,
+        g_get_application_name(),
+        NULL
+    );
+
+    if (!g_file_test(config_path, G_FILE_TEST_EXISTS)) {
+        g_mkdir_with_parents(config_path, 0700);
+    }
+
+    return config_path;
+}
+
+gchar*
+xkb_util_get_config_file (void)
+{
+    char *config_path = xkb_util_get_config_dir();
+    return g_strconcat(
+        g_build_filename(
+            config_path,
+            g_get_application_name(),
+            NULL
+        ),
+        ".cfg",
+        NULL
+    );
 }
 
