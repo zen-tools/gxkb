@@ -1,3 +1,22 @@
+/* statusicon.c
+ *
+ * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2, or (at your option)
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 #include "statusicon.h"
 
 void
@@ -96,8 +115,11 @@ statusicon_set_group( GtkWidget *item, gpointer data )
 }
 
 void
-statusicon_set_image( gchar *filepath )
+statusicon_update_current_image( void )
 {
+    const gchar *group_name = xkb_config_get_group_name( -1 );
+    gchar *filepath = xkb_util_get_flag_filename( group_name );
+
     if( icon_type == SYSTRAY )
     {
         if( trayicon == NULL )
@@ -106,10 +128,11 @@ statusicon_set_image( gchar *filepath )
         GdkPixbuf *pixmap = gdk_pixbuf_new_from_file_at_scale( filepath, 24, 24, FALSE, NULL );
         if( !pixmap )
         {
-            // TODO: Error message here
+            g_fprintf( stderr, "Can't load image from %s\n", filepath );
             return;
         }
         gtk_status_icon_set_from_pixbuf( trayicon, pixmap );
+        gtk_status_icon_set_tooltip( trayicon, g_ascii_strup( group_name, -1 ) );
     }
     else if( icon_type == APPINDICATOR )
     {
@@ -117,16 +140,6 @@ statusicon_set_image( gchar *filepath )
         app_indicator_set_icon( appindicator, filepath );
         #endif
     }
-}
-
-void
-statusicon_update_current_image( void )
-{
-    statusicon_set_image(
-        xkb_util_get_flag_filename(
-            xkb_config_get_group_name( -1 )
-        )
-    );
 }
 
 void
@@ -215,7 +228,7 @@ statusicon_update_menu( void )
     }
 
     mi = gtk_image_menu_item_new_from_stock( GTK_STOCK_QUIT, NULL );
-    g_signal_connect( G_OBJECT( mi ), "activate", (GCallback)gtk_main_quit, NULL );
+    g_signal_connect( G_OBJECT( mi ), "activate", (GCallback)xkb_main_quit, NULL );
     gtk_menu_shell_append( GTK_MENU_SHELL( rb_mouse_popup ), mi );
     gtk_widget_show( mi );
 

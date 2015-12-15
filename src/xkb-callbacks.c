@@ -1,7 +1,6 @@
-/* vim: set backspace=2 ts=4 softtabstop=4 sw=4 cinoptions=>4 expandtab autoindent smartindent: */
 /* xkb-callbacks.c
  *
- * Copyright (C) 2014 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
@@ -67,35 +66,49 @@ xkb_window_closed( WnckScreen *screen,
 }
 
 void
-xkb_about( t_xkb_settings *xkb )
+xkb_about( void )
 {
-    GtkWidget *about_dialog = gtk_message_dialog_new(
-        NULL,
-        GTK_DIALOG_DESTROY_WITH_PARENT,
-        GTK_MESSAGE_INFO,
-        GTK_BUTTONS_CLOSE,
-        "%s\nX11 Keyboard switcher\nAuthor: Dmitriy Poltavchenko <%s>",
-        PACKAGE_STRING,
-        PACKAGE_BUGREPORT
-    );
+    /* This helps prevent multiple instances */
+    if( !gtk_grab_get_current() ) {
+        /* Create the about dialog */
+        GtkWidget* about_dialog = gtk_about_dialog_new();
+        gtk_window_set_icon(
+            (GtkWindow*)about_dialog,
+            gtk_widget_render_icon(about_dialog, GTK_STOCK_ABOUT, GTK_ICON_SIZE_DIALOG, NULL)
+        );
 
-    gtk_window_set_title(
-        GTK_WINDOW( about_dialog ),
-        g_strconcat(
-            "About ",
-            PACKAGE_NAME,
-            NULL
-        )
-    );
+        const gchar* authors[] = { AUTHORS, NULL };
+        gtk_about_dialog_set_authors( (GtkAboutDialog*)about_dialog, authors );
+        gtk_about_dialog_set_name( (GtkAboutDialog*)about_dialog, PACKAGE );
+        gtk_about_dialog_set_version( (GtkAboutDialog*)about_dialog, VERSION );
+        gtk_about_dialog_set_comments( (GtkAboutDialog*)about_dialog, DESCRIPTION );
+        gtk_about_dialog_set_website( (GtkAboutDialog*)about_dialog, PACKAGE_URL );
+        gtk_about_dialog_set_copyright( (GtkAboutDialog*)about_dialog, COPYRIGHT );
 
-    /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
-    g_signal_connect_swapped(
-        about_dialog,
-        "response",
-        G_CALLBACK( gtk_widget_hide ),
-        about_dialog
-    );
+        GdkPixbuf *pixmap = gdk_pixbuf_new_from_file( APPICON, NULL );
+        if( pixmap )
+            gtk_about_dialog_set_logo( (GtkAboutDialog*)about_dialog, pixmap );
 
-    gtk_widget_show( about_dialog );
+        /* Run the about dialog */
+        gtk_dialog_run( (GtkDialog*)about_dialog );
+        gtk_widget_destroy( about_dialog );
+    } else {
+        /* A window is already open, so we present it to the user */
+        GtkWidget *toplevel = gtk_widget_get_toplevel( gtk_grab_get_current() );
+        gtk_window_present( (GtkWindow*)toplevel );
+    }
 }
 
+void
+xkb_main_quit( void )
+{
+    /* Prevent quit with dialogs open */
+    if( !gtk_grab_get_current() ) {
+        /* Quit the program */
+        gtk_main_quit();
+    } else {
+        /* A window is already open, so we present it to the user */
+        GtkWidget *toplevel = gtk_widget_get_toplevel( gtk_grab_get_current() );
+        gtk_window_present( (GtkWindow*)toplevel );
+    }
+}

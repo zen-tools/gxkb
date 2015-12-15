@@ -1,7 +1,6 @@
-/* vim: set backspace=2 ts=4 softtabstop=4 sw=4 cinoptions=>4 expandtab autoindent smartindent: */
 /* xkb-callbacks.h
  *
- * Copyright (C) 2014 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
@@ -42,7 +41,9 @@ void            xkb_window_closed               ( WnckScreen *screen,
                                                   WnckWindow *window,
                                                   t_xkb_settings *xkb );
 
-void            xkb_about                       ( t_xkb_settings *xkb );
+void            xkb_about                       ( void );
+
+void            xkb_main_quit                   ( void );
 
 #endif
 

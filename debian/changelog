@@ -1,3 +1,14 @@
+gxkb (0.7.6) unstable; urgency=medium
+
+  * Prevent quit with dialogs open
+  * Update authors list
+  * Changed about dialog
+  * Added gxkb logo
+  * Added tooltip for system trayicon
+  * Restructuring of distributive
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Sun, 05 Apr 2015 16:23:48 +0300
+
 gxkb (0.7.5) unstable; urgency=low
 
   * Man page moved from 'debian' directory into separate 'man' directory to

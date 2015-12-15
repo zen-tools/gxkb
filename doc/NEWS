@@ -1,3 +1,12 @@
+August 22 2015:
+Version gxkb 0.7.6 released.
+ * Prevent quit with dialogs open
+ * Update authors list
+ * Changed about dialog
+ * Added gxkb logo
+ * Added tooltip for system trayicon
+ * Restructuring of distributive
+
 March 28 2015:
 Version gxkb 0.7.5 released.
  * Man page moved from 'debian' directory into separate 'man' directory
