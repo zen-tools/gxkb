@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.4.1], [zen@root.ua])
+AC_INIT([gxkb], [0.5], [zen@root.ua])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([gxkb.c])
 AC_CONFIG_HEADERS([config.h])
@@ -21,4 +21,5 @@ LIBXKLAVIER_VERSION=`pkg-config --modversion libxklavier | sed 's/\.//;s/\..*//g
 AC_DEFINE_UNQUOTED(LIBXKLAVIER_VERSION, ${LIBXKLAVIER_VERSION}, [libxklavier version])
 AC_DEFINE(WNCK_I_KNOW_THIS_IS_UNSTABLE, 1, [libwnck is happy with this])
 AC_DEFINE(HAVE_CONFIG_H,1,[Include config.h])
+AC_PREFIX_DEFAULT(/usr)
 AC_OUTPUT([Makefile images/Makefile])

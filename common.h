@@ -44,6 +44,8 @@ typedef struct
     t_display_type display_type;  /* display layout as image ot text */
     t_xkb_settings *settings;     /* per-app setting and default group */
 
+    gchar *filename;
+
     /* widgets */
     GtkWidget *lb_mouse_popup;
     GtkWidget *rb_mouse_popup;

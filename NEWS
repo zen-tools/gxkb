@@ -1,3 +1,8 @@
+March 28 2013:
+Version gxkb 0.5 released.
+  * reduced dependence
+  * fixed size of image flags layout
+      
 March 24 2013:
 Version gxkb 0.4 released.
   * fixed bug in search of the flags when specified any keyboard option
