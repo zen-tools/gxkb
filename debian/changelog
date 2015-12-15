@@ -1,7 +1,14 @@
+gxkb (0.7.5) unstable; urgency=low
+
+  * Man page moved from 'debian' directory into separate 'man' directory to
+    install it not only in the Debian distributive.
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Sat, 28 Mar 2015 15:48:28 +0200
+
 gxkb (0.7.4) unstable; urgency=low
 
   * Closed bug#1397447 ( https://bugs.launchpad.net/gxkb/+bug/1397447 )
-    Now user icons directory defined by the XDG_CONFIG_HOME environment variable.
+    Now user icons directory defined by the XDG_DATA_HOME environment variable.
     The ~/.config/gxkb/flags path should not work.
   * Added man page.
   * Added support for Clang C/C++ compiler.

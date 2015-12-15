@@ -1,4 +1,9 @@
 March 28 2015:
+Version gxkb 0.7.5 released.
+ * Man page moved from 'debian' directory into separate 'man' directory
+   to install it not only in the Debian distributive.
+
+March 28 2015:
 Version gxkb 0.7.4 released.
   * Closed bug 1397447 ( https://bugs.launchpad.net/gxkb/+bug/1397447 )
   * Added man page
