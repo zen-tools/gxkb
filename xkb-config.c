@@ -142,7 +142,13 @@ xkb_config_initialize_xkb_options (t_xkb_settings *settings)
     config->application_map = g_hash_table_new (g_direct_hash, NULL);
 
     registry = xkl_config_registry_get_instance (config->engine);
+
+#if LIBXKLAVIER_VERSION >= 40
     xkl_config_registry_load (registry, FALSE);
+#else
+    xkl_config_registry_load (registry);
+#endif
+
     g_object_unref (registry);
 
     config_item = xkl_config_item_new ();
@@ -235,7 +241,11 @@ xkb_config_finalize (void)
 {
     xkb_config_free ();
 
+#if LIBXKLAVIER_VERSION >= 50
     xkl_engine_stop_listen (config->engine, XKLL_TRACK_KEYBOARD_STATE);
+#else
+    xkl_engine_stop_listen (config->engine);
+#endif
     g_object_unref (config->config_rec);
 
     g_free (config);
@@ -615,7 +625,12 @@ xkb_config_get_xkl_registry (void)
     if (!config) return NULL;
 
     registry = xkl_config_registry_get_instance (config->engine);
+
+#if LIBXKLAVIER_VERSION >= 40
     xkl_config_registry_load (registry, FALSE);
+#else
+    xkl_config_registry_load (registry);
+#endif
 
     return registry;
 }
