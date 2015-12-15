@@ -1,8 +1,15 @@
+/* vim: set backspace=2 ts=4 softtabstop=4 sw=4 cinoptions=>4 expandtab autoindent smartindent: */
 /* xkb-util.h
  *
- * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2013 Dmitriy Poltavchenko <zen@root.ua>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
+ *
+ * Parts of this program comes from the XfKC tool:
+ * Copyright (C) 2006 Gauvain Pocentek <gauvainpocentek@gmail.com>
+ *
+ * A part of this file comes from the gnome keyboard capplet (control-center):
+ * Copyright (C) 2003 Sergey V. Oudaltsov <svu@users.sourceforge.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,24 +29,17 @@
 #ifndef __GXKB_UTIL_H__
 #define __GXKB_UTIL_H__
 
-#ifdef HAVE_CONFIG_H
-#   include "config.h"
-#endif
+///FIXME: define flags path
 
 #include <glib.h>
+#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 
 gchar*      xkb_util_get_flag_filename      (const gchar* group_name);
 
 gchar*      xkb_util_get_layout_string      (const gchar* group_name,
-                                             const gchar* variant);
-
+        const gchar* variant);
 gchar*      xkb_util_normalize_group_name   (const gchar* group_name);
-
-gchar*      xkb_util_get_data_dir           (void);
-
-gchar*      xkb_util_get_config_dir         (void);
-
-gchar*      xkb_util_get_config_file        (void);
 
 #endif
 
