@@ -29,14 +29,13 @@
 #ifndef _GXKB_CALLBACKS_H_
 #define _GXKB_CALLBACKS_H_
 
+#ifdef HAVE_CONFIG_H
+#   include "config.h"
+#endif
+
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <libwnck/libwnck.h>
-
-#include <cairo/cairo.h>
-#include <librsvg/rsvg.h>
-#include <librsvg/rsvg-cairo.h>
-#include <pango/pangocairo.h>
 
 #include "common.h"
 

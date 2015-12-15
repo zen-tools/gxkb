@@ -79,8 +79,8 @@ GdkFilterReturn     handle_xevent                       (GdkXEvent * xev,
         GdkEvent * event);
 
 void                xkb_config_update_configuration     (t_xkb_settings *settings);
-void         xkb_config_free                     ();
-void         xkb_config_initialize_xkb_options   (t_xkb_settings *settings);
+static void         xkb_config_free                     ();
+static void         xkb_config_initialize_xkb_options   (t_xkb_settings *settings);
 
 /* ---------------------- implementation ------------------------- */
 
@@ -124,7 +124,7 @@ xkb_config_initialize (t_xkb_settings *settings,
     return TRUE;
 }
 
-void
+static void
 xkb_config_initialize_xkb_options (t_xkb_settings *settings)
 {
     XklConfigRegistry *registry;
@@ -205,7 +205,7 @@ kbd_config_free (t_xkb_kbd_config *kbd_config)
     g_free (kbd_config);
 }
 
-void
+static void
 xkb_config_free (void)
 {
     gint i;

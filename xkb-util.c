@@ -27,8 +27,6 @@
  */
 
 #include <string.h>
-#include <librsvg/rsvg.h>
-#include <cairo/cairo.h>
 
 #include "xkb-util.h"
 
@@ -40,8 +38,8 @@ xkb_util_get_flag_filename (const gchar* group_name)
 
     if (!group_name)
         return NULL;
-    /// FIXME: Fix icon path
-    //filename = g_strconcat (FLAGSDIR, "/", group_name, ".svg", NULL);
+
+    filename = g_strconcat (IMGPREFIX, "/", g_ascii_strdown(group_name, -1), ".png", NULL);
 
     return filename;
 }

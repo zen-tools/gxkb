@@ -29,6 +29,10 @@
 #ifndef _GXKB_H_
 #define _GXKB_H_
 
+#ifdef HAVE_CONFIG_H
+#   include "config.h"
+#endif
+
 #include "xkb-config.h"
 
 #include <X11/Xlib.h>
@@ -48,34 +52,10 @@ typedef struct
     t_display_type display_type;  /* display layout as image ot text */
     t_xkb_settings *settings;     /* per-app setting and default group */
 
-    gint button_state;            /* gtk state of the button */
-
     /* widgets */
     GtkWidget *popup;
     /*  */
-    GtkWidget *kbd_model_combo;
-    GtkListStore *combo_store;
-
-    GtkWidget *layout_tree_view;
-    GtkListStore *layout_store;
-
-    GtkWidget *toggle_options_combo;
-    GtkListStore *toggle_options_store;
-
-    GtkWidget *compose_key_options_combo;
-    GtkListStore *compose_key_options_store;
-
-    GtkWidget *add_layout_btn;
-    GtkWidget *rm_layout_btn;
-    GtkWidget *edit_layout_btn;
 } t_xkb;
-
-/*
- * NOTE: The t_xkb->button_size field is due to xfce panel 4.4.1
- * prior versions, allowing a plugin to resize the whole panel.
- * This should be removed after xfce 4.4.2, where this behaviour
- * should not be possible.
- */
 
 #endif
 

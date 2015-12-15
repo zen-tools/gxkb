@@ -29,6 +29,10 @@
 #ifndef _GXKB_CONFIG_H_
 #define _GXKB_CONFIG_H_
 
+#ifdef HAVE_CONFIG_H
+#   include "config.h"
+#endif
+
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <libxklavier/xklavier.h>

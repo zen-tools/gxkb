@@ -3,38 +3,45 @@
  */
 #include <stdlib.h>
 #include <gtk/gtk.h>
-#include <ctype.h>
+
+#ifdef HAVE_CONFIG_H
+#   include "config.h"
+#endif
 
 #include <libxklavier/xklavier.h>
 #include <libwnck/libwnck.h>
-#include <cairo/cairo.h>
 #include "common.h"
 #include "xkb-config.h"
 #include "xkb-util.h"
 #include "xkb-callbacks.h"
 
 
-#include <stdio.h>
-
 /* ----------------------------------------------------------------- *
  *                           XKB Stuff                               *
  * ----------------------------------------------------------------- */
+
+void         xkb_state_changed                   (gint current_group,
+                                                 gboolean config_changed,
+                                                 gpointer user_data);
+
+void         xkb_set_group                       (GtkStatusIcon *item,
+                                                 gpointer data);
 
 t_xkb *      xkb_new                             (GtkStatusIcon *plugin);
 
 void         xkb_free                            (t_xkb *xkb);
 
-gboolean     xkb_load_config                     (t_xkb *xkb, const gchar *filename);
-
 void         xkb_save_config                     (t_xkb *xkb, const gchar *filename);
+
+gboolean     xkb_load_config                     (t_xkb *xkb, const gchar *filename);
 
 void         xkb_load_default                    (t_xkb *xkb);
 
 void         xkb_initialize_menu                 (t_xkb *xkb);
 
-void         xkb_refresh_gui                     (t_xkb *xkb);
+void         xkb_refresh                         (t_xkb *xkb);
 
-GdkPixbuf *  draw_group_icon                     (gchar *text);
+GdkPixbuf *  text_to_gtk_pixbuf                  (t_xkb *xkb, gchar *text);
 
 /* ================================================================== *
  *                        Implementation                              *
@@ -45,7 +52,7 @@ xkb_state_changed (gint current_group, gboolean config_changed,
                    gpointer user_data)
 {
     t_xkb *xkb = (t_xkb*) user_data;
-    xkb_refresh_gui (xkb);
+    xkb_refresh(xkb);
 
     if (config_changed)
     {
@@ -56,7 +63,7 @@ xkb_state_changed (gint current_group, gboolean config_changed,
 
 void
 xkb_set_group (GtkStatusIcon *item,
-                      gpointer data)
+               gpointer data)
 {
     gint group = GPOINTER_TO_INT (data);
     xkb_config_set_group (group);
@@ -76,8 +83,6 @@ xkb_new (GtkStatusIcon *tray)
     g_signal_connect (G_OBJECT(xkb->tray), "activate", G_CALLBACK (xkb_tray_icon_clicked), xkb);
     g_signal_connect (G_OBJECT(xkb->tray), "scroll-event", G_CALLBACK (xkb_tray_icon_scrolled), xkb);
     g_signal_connect(G_OBJECT(xkb->tray), "popup-menu", G_CALLBACK(xkb_tray_icon_popup_menu), xkb);
-
-    //g_object_set (G_OBJECT (xkb->tray), "has-tooltip", FALSE, NULL);
 
     wnck_screen = wnck_screen_get_default ();
     g_signal_connect (G_OBJECT (wnck_screen), "active-window-changed",
@@ -99,6 +104,7 @@ xkb_free (t_xkb *xkb)
         kbd_config_free (xkb->settings->kbd_config);
 
     g_free (xkb->settings);
+    g_object_unref (xkb->tray);
 
     gtk_widget_destroy (xkb->popup);
 }
@@ -140,7 +146,7 @@ xkb_save_config (t_xkb *xkb, const gchar *config_file)
 gboolean
 xkb_load_config (t_xkb *xkb, const gchar *filename)
 {
-    GError *error;
+    GError *error = NULL;
     GKeyFile *cfg_file = g_key_file_new();
     if (!g_key_file_load_from_file(cfg_file, filename, G_KEY_FILE_KEEP_COMMENTS, &error))
     {
@@ -149,16 +155,13 @@ xkb_load_config (t_xkb *xkb, const gchar *filename)
     }
 
     xkb->display_type = g_key_file_get_integer(cfg_file, "xkb config", "display_type", &error);
-    error = NULL;
     xkb->settings->group_policy = g_key_file_get_integer(cfg_file, "xkb config", "group_policy",  &error);
-    error = NULL;
-    if (xkb->settings->group_policy != GROUP_POLICY_GLOBAL) {
+    if (xkb->settings->group_policy != GROUP_POLICY_GLOBAL)
+    {
         xkb->settings->default_group = g_key_file_get_integer(cfg_file, "xkb config", "default_group",  &error);
-        error = NULL;
     }
 
     xkb->settings->never_modify_config = g_key_file_get_boolean(cfg_file, "xkb config", "never_modify_config", &error);
-    error = NULL;
 
     if (xkb->settings->kbd_config == NULL)
     {
@@ -166,15 +169,10 @@ xkb_load_config (t_xkb *xkb, const gchar *filename)
     }
 
     xkb->settings->kbd_config->model = g_key_file_get_string(cfg_file, "xkb config", "model", &error);
-    error = NULL;
     xkb->settings->kbd_config->layouts = g_key_file_get_string(cfg_file, "xkb config", "layouts", &error);
-    error = NULL;
     xkb->settings->kbd_config->variants = g_key_file_get_string(cfg_file, "xkb config", "variants", &error);
-    error = NULL;
     xkb->settings->kbd_config->toggle_option = g_key_file_get_string(cfg_file, "xkb config", "toggle_option", &error);
-    error = NULL;
     xkb->settings->kbd_config->compose_key_position = g_key_file_get_string(cfg_file, "xkb config", "compose_key_position", &error);
-    error = NULL;
 
     g_key_file_free(cfg_file);
 
@@ -201,12 +199,9 @@ xkb_load_default (t_xkb *xkb)
 void
 xkb_initialize_menu (t_xkb *xkb)
 {
-    ///FIXME: Add menu pixmap
-
     gint i;
     GdkPixbuf *handle = NULL;
     GdkPixbuf *pixbuf;
-    //gchar *imgfilename;
     GtkWidget *image;
     GtkWidget *menu_item;
 
@@ -224,16 +219,12 @@ xkb_initialize_menu (t_xkb *xkb)
     {
         gchar *layout_string;
 
-        //imgfilename = xkb_util_get_flag_filename (xkb_config_get_group_name (i));
-        //handle = rsvg_handle_new_from_file (imgfilename, NULL);
-        //g_free (imgfilename);
-
         layout_string =
             xkb_util_get_layout_string (xkb_config_get_group_name (i),
                                         xkb_config_get_variant (i));
         layout_string =  g_ascii_strup (layout_string, -1);
 
-        handle = draw_group_icon(layout_string);
+        handle = text_to_gtk_pixbuf(xkb, layout_string);
 
         menu_item = gtk_image_menu_item_new_with_label (layout_string);
         g_free (layout_string);
@@ -246,6 +237,7 @@ xkb_initialize_menu (t_xkb *xkb)
             image = gtk_image_new ();
 
             pixbuf = gdk_pixbuf_scale_simple (handle, width, height, GDK_INTERP_BILINEAR);
+
             gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
             gtk_widget_show (image);
             gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu_item), image);
@@ -276,50 +268,58 @@ xkb_initialize_menu (t_xkb *xkb)
 }
 
 void
-xkb_refresh_gui (t_xkb *xkb)
+xkb_refresh(t_xkb *xkb)
 {
     gchar *text =  g_ascii_strup(xkb_util_get_layout_string (xkb_config_get_group_name (-1),
                                  xkb_config_get_variant (-1)), -1);
 
-    GdkPixbuf * pixmap = draw_group_icon(text);
+    GdkPixbuf * pixmap = text_to_gtk_pixbuf(xkb, text);
     gtk_status_icon_set_from_pixbuf(xkb->tray, pixmap);
 
     g_free(text);
 }
 
 GdkPixbuf *
-draw_group_icon(gchar *text)
+text_to_gtk_pixbuf(t_xkb *xkb, gchar *text)
 {
+    GtkWidget *scratch = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+    gtk_widget_realize (scratch);
+    PangoLayout *layout = gtk_widget_create_pango_layout (scratch, NULL);
+    gtk_widget_destroy (scratch);
 
-    cairo_t *cr;
+    gchar *markup = g_strdup_printf ("%s", text);
+    pango_layout_set_markup (layout, markup, -1);
+    g_free (markup);
 
-    int width = 26;
-    int height = 26;
+    int width = 0;
+    int heigth = 0;
+    pango_layout_get_size (layout, &width, &heigth);
 
-    GdkPixmap *pixmap = gdk_pixmap_new(NULL, width, height, 24);
-    GError *error;
-    cr = gdk_cairo_create(pixmap);
+    // offset for draw label centered
+    int woffset = (width/PANGO_SCALE+4)/2-(width/PANGO_SCALE)/2;
+    int hoffset = (width/PANGO_SCALE+4)/2-(width/PANGO_SCALE)/2;
 
-    cairo_rectangle(cr, 0.0, 0.0, width, height);
-    cairo_set_antialias(cr, CAIRO_ANTIALIAS_DEFAULT);
-    cairo_rectangle(cr, 0.0, 3.0, width, height-6);
-    cairo_set_source_rgb(cr, 0.5, 0.4, 0.7);
-    cairo_fill(cr);
-    //cairo_paint(cr);
+    width = width/PANGO_SCALE+4;
+    heigth = heigth/PANGO_SCALE+4;
 
-    cairo_select_font_face (cr, "monospace", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
-    cairo_set_font_size (cr, 20.0);
-    cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
-    cairo_move_to (cr, 1, 20);
-    cairo_show_text (cr, text);
-    cairo_destroy(cr);
+    GdkPixbuf *pb = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, width, heigth);
 
-    GdkPixbuf *pixbuf_new = gdk_pixbuf_get_from_drawable(NULL, pixmap, NULL,
-                            0, 0, 0, 0, width, height);
+    gdk_pixbuf_fill(pb, 0xffffffff);
 
-    g_object_unref(pixmap);
+    GdkPixmap *pm = gdk_pixmap_new (NULL, width, heigth, 24);
+    GdkGC *gc = gdk_gc_new (pm);
+    gdk_draw_pixbuf (pm, gc, pb, 0, 0, 0, 0, width, heigth, GDK_RGB_DITHER_NONE, 0, 0);
 
-    return pixbuf_new;
+    gdk_draw_layout (pm, gc, woffset, hoffset, layout);
+
+
+    g_object_unref(layout);
+    gdk_gc_unref(gc);
+
+    GdkPixbuf *ret = gdk_pixbuf_get_from_drawable (NULL, pm, NULL, 0, 0, 0, 0, width, heigth);
+    g_object_unref(pm);
+    g_object_unref(pb);
+    return ret;
 }
 
 int main (int argc, char *argv[])
@@ -334,13 +334,13 @@ int main (int argc, char *argv[])
     tray_icon = gtk_status_icon_new();
 
     t_xkb *xkb = xkb_new (tray_icon);
-xkb_load_default(xkb);
+
     char *config_path = (g_getenv("XDG_CONFIG_HOME") == NULL
                          ? g_build_filename(g_get_home_dir(), ".config", NULL)
                          : g_strdup(g_getenv("XDG_CONFIG_HOME")));
 
     char *config_file = g_strconcat(g_build_filename(config_path,
-                                    g_get_application_name(), NULL), ".cfg");
+                                    g_get_application_name(), NULL), ".cfg", NULL);
 
     if (!g_file_test(config_path, G_FILE_TEST_EXISTS))
     {
@@ -349,7 +349,8 @@ xkb_load_default(xkb);
     }
     else
     {
-        if(!xkb_load_config(xkb, config_file)) {
+        if(!xkb_load_config(xkb, config_file))
+        {
             xkb_load_default(xkb);
         }
     }
@@ -357,16 +358,15 @@ xkb_load_default(xkb);
     if (xkb_config_initialize (xkb->settings, xkb_state_changed, xkb))
     {
         xkb_config_update_settings(xkb->settings);
-        xkb_refresh_gui (xkb);
+        xkb_refresh(xkb);
         xkb_initialize_menu (xkb);
     }
 
     g_free(config_path);
 
-    gtk_status_icon_set_visible(tray_icon, TRUE);
-
     /* Enter the main loop */
     gtk_main ();
+
     if (!xkb->settings->never_modify_config)
         xkb_save_config(xkb, config_file);
 

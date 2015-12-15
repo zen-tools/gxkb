@@ -29,7 +29,12 @@
 #ifndef __GXKB_UTIL_H__
 #define __GXKB_UTIL_H__
 
-///FIXME: define flags path
+#ifdef HAVE_CONFIG_H
+#   include "config.h"
+#endif
+
+#define PREFIX "."
+#define IMGPREFIX PREFIX "/images"
 
 #include <glib.h>
 #include <gdk/gdk.h>
