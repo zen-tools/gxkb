@@ -11,8 +11,6 @@ status_icon_new( void )
         );
         icon_type = APPINDICATOR;
         app_indicator_set_status( appindicator, APP_INDICATOR_STATUS_ACTIVE );
-        //rb_mouse_popup = gtk_menu_new();
-        //app_indicator_set_menu( appindicator, GTK_MENU( rb_mouse_popup ) );
         APP_INDICATOR_GET_CLASS( appindicator )->fallback   = appindicator_fallback;
         APP_INDICATOR_GET_CLASS( appindicator )->unfallback = appindicator_unfallback;
         g_signal_connect( G_OBJECT( appindicator ), "scroll-event",
@@ -30,6 +28,9 @@ status_icon_new( void )
         g_signal_connect( G_OBJECT( trayicon ), "popup-menu"  ,
                           G_CALLBACK( gtk_status_icon_popup_menu ), NULL );
     #endif
+
+    statusicon_update_menu();
+    statusicon_update_current_image();
 }
 
 void

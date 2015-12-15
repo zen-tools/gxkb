@@ -6,7 +6,7 @@ Uploaders: Dmitriy Poltavchenko <admin@linuxhub.ru>
 Build-Depends: libgtk2.0-0 ( >= 2.12.0 ), libxklavier16 ( >= 3.0 ), libwnck22 ( >= 2.22.0 ),
   libgtk2.0-dev, libxklavier-dev (>= 5.0), libwnck-dev,
   libappindicator-dev, debhelper, dh-make, dh-autoreconf
-Standards-Version: 0.7.0
+Standards-Version: 3.9.6
 Homepage: https://sourceforge.net/p/gxkb/
 Vcs-Svn: svn://svn.code.sf.net/p/gxkb/svn/trunk
 Vcs-Browser: https://sourceforge.net/p/gxkb/svn/4/tree/

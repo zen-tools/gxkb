@@ -1,3 +1,22 @@
+gxkb (0.7.3) unstable; urgency=low
+
+  * Fixed unexpected behavior of gxkb with A4tech KV-300H keyboard
+    thanks to Andrey <absent@ngs.ru> for the patch
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Mon, 27 Oct 2014 21:22:08 +0200
+
+gxkb (0.7.2) unstable; urgency=low
+
+  * Fixed display of keyboard layout at startup in the fallback mode
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Sun, 05 Oct 2014 23:07:35 +0300
+
+gxkb (0.7.1) unstable; urgency=low
+
+  * Fixed status icon display in fallback mode when used option 'never_modify_config=true'
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Sat, 04 Oct 2014 23:39:17 +0300
+
 gxkb (0.7.0) unstable; urgency=low
 
   * Added appindicator support

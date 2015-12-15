@@ -1,3 +1,16 @@
+October 05 2014:
+Version gxkb 0.7.3 released.
+  * Fixed unexpected behavior of gxkb with A4tech KV-300H keyboard
+    thanks to Andrey <absent@ngs.ru> for the patch
+
+October 05 2014:
+Version gxkb 0.7.2 released.
+  * Fixed display of keyboard layout at startup in the fallback mode
+
+October 04 2014:
+Version gxkb 0.7.1 released.
+  * Fixed status icon display in fallback mode when used option 'never_modify_config=true'
+
 September 08 2014:
 Version gxkb 0.7.0 released.
   * Added appindicator support
