@@ -5,12 +5,6 @@
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
- * Parts of this program comes from the XfKC tool:
- * Copyright (C) 2006 Gauvain Pocentek <gauvainpocentek@gmail.com>
- *
- * A part of this file comes from the gnome keyboard capplet (control-center):
- * Copyright (C) 2003 Sergey V. Oudaltsov <svu@users.sourceforge.net>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
@@ -30,7 +24,6 @@
 
 #include "xkb-util.h"
 
-
 gchar*
 xkb_util_get_flag_filename (const gchar* group_name)
 {
@@ -39,7 +32,14 @@ xkb_util_get_flag_filename (const gchar* group_name)
     if (!group_name)
         return NULL;
 
-    filename = g_strconcat (IMGPREFIX, "/", g_ascii_strdown(group_name, -1), ".png", NULL);
+    filename = g_strconcat (FLAGSDIR, "/", g_ascii_strdown(group_name, -1), ".png", NULL);
+
+    if (!g_file_test(filename, G_FILE_TEST_EXISTS))
+    {
+        filename = g_strconcat (FLAGSDIR, "/", "zz.png", NULL);
+        if (!g_file_test(filename, G_FILE_TEST_EXISTS))
+            return NULL;
+    }
 
     return filename;
 }

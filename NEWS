@@ -1,2 +1,11 @@
+March 19 2013:
+Version gxkb 0.3 released.
+  * add left-click menu with keyboard layout options
+  * add right-click menu with 'exit' and 'about' options
+  * add icons
+  
 March 18 2013:
-Version gxkb 2.0 released.
+Version gxkb 0.2 released.
+
+March 11 2013:
+Initial code base.

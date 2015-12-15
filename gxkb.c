@@ -41,8 +41,7 @@ void         xkb_initialize_menu                 (t_xkb *xkb);
 
 void         xkb_refresh                         (t_xkb *xkb);
 
-GdkPixbuf *  text_to_gtk_pixbuf                  (t_xkb *xkb, gchar *text);
-
+void         xkb_about                           (t_xkb *xkb);
 /* ================================================================== *
  *                        Implementation                              *
  * ================================================================== */
@@ -80,11 +79,11 @@ xkb_new (GtkStatusIcon *tray)
     xkb->settings = g_new0 (t_xkb_settings, 1);
     xkb->tray = tray;
 
-    g_signal_connect (G_OBJECT(xkb->tray), "activate", G_CALLBACK (xkb_tray_icon_clicked), xkb);
-    g_signal_connect (G_OBJECT(xkb->tray), "scroll-event", G_CALLBACK (xkb_tray_icon_scrolled), xkb);
+    g_signal_connect(G_OBJECT(xkb->tray), "activate", G_CALLBACK (xkb_tray_icon_clicked), xkb);
+    g_signal_connect(G_OBJECT(xkb->tray), "scroll-event", G_CALLBACK (xkb_tray_icon_scrolled), xkb);
     g_signal_connect(G_OBJECT(xkb->tray), "popup-menu", G_CALLBACK(xkb_tray_icon_popup_menu), xkb);
 
-    wnck_screen = wnck_screen_get_default ();
+    wnck_screen = wnck_screen_get_default();
     g_signal_connect (G_OBJECT (wnck_screen), "active-window-changed",
                       G_CALLBACK (xkb_active_window_changed), xkb);
     g_signal_connect (G_OBJECT (wnck_screen), "window-closed",
@@ -106,7 +105,8 @@ xkb_free (t_xkb *xkb)
     g_free (xkb->settings);
     g_object_unref (xkb->tray);
 
-    gtk_widget_destroy (xkb->popup);
+    gtk_widget_destroy (xkb->rb_mouse_popup);
+    gtk_widget_destroy (xkb->lb_mouse_popup);
 }
 
 void
@@ -117,7 +117,7 @@ xkb_save_config (t_xkb *xkb, const gchar *config_file)
     GKeyFile *cfg_file = g_key_file_new();
     g_key_file_set_list_separator (cfg_file, ',');
 
-    g_key_file_set_integer(cfg_file, "xkb config", "display_type", xkb->display_type);
+    //g_key_file_set_integer(cfg_file, "xkb config", "display_type", xkb->display_type);
     g_key_file_set_integer(cfg_file, "xkb config", "group_policy", xkb->settings->group_policy);
     g_key_file_set_integer(cfg_file, "xkb config", "default_group", xkb->settings->default_group);
     g_key_file_set_boolean(cfg_file, "xkb config", "never_modify_config", xkb->settings->never_modify_config);
@@ -154,7 +154,7 @@ xkb_load_config (t_xkb *xkb, const gchar *filename)
         return FALSE;
     }
 
-    xkb->display_type = g_key_file_get_integer(cfg_file, "xkb config", "display_type", &error);
+    //xkb->display_type = g_key_file_get_integer(cfg_file, "xkb config", "display_type", &error);
     xkb->settings->group_policy = g_key_file_get_integer(cfg_file, "xkb config", "group_policy",  &error);
     if (xkb->settings->group_policy != GROUP_POLICY_GLOBAL)
     {
@@ -186,7 +186,7 @@ xkb_load_default (t_xkb *xkb)
     {
         xkb->settings->kbd_config = g_new0 (t_xkb_kbd_config, 1);
     }
-    xkb->display_type = DISPLAY_TYPE_TEXT;
+    //xkb->display_type = DISPLAY_TYPE_TEXT;
     xkb->settings->group_policy = GROUP_POLICY_PER_APPLICATION;
     xkb->settings->never_modify_config = FALSE;
     xkb->settings->kbd_config->model = g_strdup("pc105");
@@ -199,18 +199,42 @@ xkb_load_default (t_xkb *xkb)
 void
 xkb_initialize_menu (t_xkb *xkb)
 {
+    if (G_UNLIKELY (xkb == NULL)) return;
+
+    // Right button click menu
+    GtkWidget *mi;
+
+    if (xkb->rb_mouse_popup)
+        gtk_widget_destroy (xkb->rb_mouse_popup);
+
+    xkb->rb_mouse_popup = gtk_menu_new();
+
+    mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_DIALOG_INFO, NULL);
+    g_signal_connect(G_OBJECT(mi), "activate", (GCallback)xkb_about, NULL);
+    gtk_menu_shell_append (GTK_MENU_SHELL (xkb->rb_mouse_popup), mi);
+    gtk_widget_show (mi);
+
+    mi = gtk_menu_item_new ();
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (xkb->rb_mouse_popup), mi);
+    gtk_widget_set_sensitive (mi, FALSE);
+
+    mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT, NULL);
+    g_signal_connect(G_OBJECT(mi), "activate", (GCallback)gtk_main_quit, NULL);
+    gtk_menu_shell_append (GTK_MENU_SHELL (xkb->rb_mouse_popup), mi);
+    gtk_widget_show (mi);
+
+    // Left cutton click menu
     gint i;
     GdkPixbuf *handle = NULL;
-    GdkPixbuf *pixbuf;
+    gchar *imgfilename;
     GtkWidget *image;
     GtkWidget *menu_item;
 
-    if (G_UNLIKELY (xkb == NULL)) return;
+    if (xkb->lb_mouse_popup)
+        gtk_widget_destroy (xkb->lb_mouse_popup);
 
-    if (xkb->popup)
-        gtk_widget_destroy (xkb->popup);
-
-    xkb->popup = gtk_menu_new ();
+    xkb->lb_mouse_popup = gtk_menu_new ();
 
     gint width, height;
     gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
@@ -219,12 +243,15 @@ xkb_initialize_menu (t_xkb *xkb)
     {
         gchar *layout_string;
 
+        imgfilename = xkb_util_get_flag_filename (xkb_config_get_group_name (i));
+        handle = gdk_pixbuf_new_from_file_at_scale(imgfilename, width, height, TRUE, NULL);
+        g_free (imgfilename);
+
         layout_string =
             xkb_util_get_layout_string (xkb_config_get_group_name (i),
                                         xkb_config_get_variant (i));
-        layout_string =  g_ascii_strup (layout_string, -1);
 
-        handle = text_to_gtk_pixbuf(xkb, layout_string);
+        layout_string =  g_ascii_strup (layout_string, -1);
 
         menu_item = gtk_image_menu_item_new_with_label (layout_string);
         g_free (layout_string);
@@ -236,90 +263,49 @@ xkb_initialize_menu (t_xkb *xkb)
         {
             image = gtk_image_new ();
 
-            pixbuf = gdk_pixbuf_scale_simple (handle, width, height, GDK_INTERP_BILINEAR);
-
-            gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
+            gtk_image_set_from_pixbuf (GTK_IMAGE (image), handle);
             gtk_widget_show (image);
             gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu_item), image);
 
-            g_object_unref (G_OBJECT (pixbuf));
             g_object_unref (handle);
         }
 
         gtk_widget_show (menu_item);
 
-        gtk_menu_shell_append (GTK_MENU_SHELL (xkb->popup), menu_item);
+        gtk_menu_shell_append (GTK_MENU_SHELL (xkb->lb_mouse_popup), menu_item);
     }
-
-    GtkWidget *sep = gtk_separator_menu_item_new();
-    gtk_menu_shell_append (GTK_MENU_SHELL (xkb->popup), sep);
-    gtk_widget_show (sep);
-    menu_item = gtk_image_menu_item_new_with_label ("Quit");
-
-    g_signal_connect (G_OBJECT (menu_item), "activate",
-                      G_CALLBACK (gtk_main_quit), NULL);
-
-    image = gtk_image_new_from_stock(GTK_STOCK_QUIT, GTK_ICON_SIZE_MENU);
-
-    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menu_item), image);
-    gtk_widget_show (menu_item);
-
-    gtk_menu_shell_append (GTK_MENU_SHELL (xkb->popup), menu_item);
 }
 
 void
 xkb_refresh(t_xkb *xkb)
 {
-    gchar *text =  g_ascii_strup(xkb_util_get_layout_string (xkb_config_get_group_name (-1),
-                                 xkb_config_get_variant (-1)), -1);
+    gchar *text = xkb_util_get_layout_string (xkb_config_get_group_name (-1),
+                                 xkb_config_get_variant (-1));
 
-    GdkPixbuf * pixmap = text_to_gtk_pixbuf(xkb, text);
-    gtk_status_icon_set_from_pixbuf(xkb->tray, pixmap);
-
+    gchar *filepath = xkb_util_get_flag_filename(text);
     g_free(text);
+
+    GdkPixbuf * pixmap = gdk_pixbuf_new_from_file_at_size(filepath, 24, 24, NULL);
+
+    if (!pixmap)
+        return;
+
+    gtk_status_icon_set_from_pixbuf(xkb->tray, pixmap);
 }
 
-GdkPixbuf *
-text_to_gtk_pixbuf(t_xkb *xkb, gchar *text)
+void
+xkb_about(t_xkb *xkb)
 {
-    GtkWidget *scratch = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_widget_realize (scratch);
-    PangoLayout *layout = gtk_widget_create_pango_layout (scratch, NULL);
-    gtk_widget_destroy (scratch);
-
-    gchar *markup = g_strdup_printf ("%s", text);
-    pango_layout_set_markup (layout, markup, -1);
-    g_free (markup);
-
-    int width = 0;
-    int heigth = 0;
-    pango_layout_get_size (layout, &width, &heigth);
-
-    // offset for draw label centered
-    int woffset = (width/PANGO_SCALE+4)/2-(width/PANGO_SCALE)/2;
-    int hoffset = (width/PANGO_SCALE+4)/2-(width/PANGO_SCALE)/2;
-
-    width = width/PANGO_SCALE+4;
-    heigth = heigth/PANGO_SCALE+4;
-
-    GdkPixbuf *pb = gdk_pixbuf_new(GDK_COLORSPACE_RGB, FALSE, 8, width, heigth);
-
-    gdk_pixbuf_fill(pb, 0xffffffff);
-
-    GdkPixmap *pm = gdk_pixmap_new (NULL, width, heigth, 24);
-    GdkGC *gc = gdk_gc_new (pm);
-    gdk_draw_pixbuf (pm, gc, pb, 0, 0, 0, 0, width, heigth, GDK_RGB_DITHER_NONE, 0, 0);
-
-    gdk_draw_layout (pm, gc, woffset, hoffset, layout);
-
-
-    g_object_unref(layout);
-    gdk_gc_unref(gc);
-
-    GdkPixbuf *ret = gdk_pixbuf_get_from_drawable (NULL, pm, NULL, 0, 0, 0, 0, width, heigth);
-    g_object_unref(pm);
-    g_object_unref(pb);
-    return ret;
+    GtkWidget *about_dialog = gtk_message_dialog_new (NULL,
+              GTK_DIALOG_DESTROY_WITH_PARENT,
+              GTK_MESSAGE_INFO,
+              GTK_BUTTONS_CLOSE,
+              "%s\nX11 Keyboard switcher\nAuthor: Dmitriy Poltavchenko <%s>", PACKAGE_STRING, PACKAGE_BUGREPORT);
+              /* Destroy the dialog when the user responds to it (e.g. clicks a button) */
+              g_signal_connect_swapped (about_dialog, "response",
+              G_CALLBACK (gtk_widget_hide),
+              about_dialog);
+    gtk_widget_show (about_dialog);
 }
 
 int main (int argc, char *argv[])
@@ -357,7 +343,7 @@ int main (int argc, char *argv[])
 
     if (xkb_config_initialize (xkb->settings, xkb_state_changed, xkb))
     {
-        xkb_config_update_settings(xkb->settings);
+        //xkb_config_update_settings(xkb->settings);
         xkb_refresh(xkb);
         xkb_initialize_menu (xkb);
     }
@@ -374,4 +360,6 @@ int main (int argc, char *argv[])
     xkb_free(xkb);
     return 0;
 }
+
+
 

@@ -53,7 +53,8 @@ typedef struct
     t_xkb_settings *settings;     /* per-app setting and default group */
 
     /* widgets */
-    GtkWidget *popup;
+    GtkWidget *lb_mouse_popup;
+    GtkWidget *rb_mouse_popup;
     /*  */
 } t_xkb;
 

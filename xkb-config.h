@@ -5,12 +5,6 @@
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
- * Parts of this program comes from the XfKC tool:
- * Copyright (C) 2006 Gauvain Pocentek <gauvainpocentek@gmail.com>
- *
- * A part of this file comes from the gnome keyboard capplet (control-center):
- * Copyright (C) 2003 Sergey V. Oudaltsov <svu@users.sourceforge.net>
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2, or (at your option)
