@@ -1,3 +1,13 @@
+gxkb (0.7.4) unstable; urgency=low
+
+  * Closed bug#1397447 ( https://bugs.launchpad.net/gxkb/+bug/1397447 )
+    Now user icons directory defined by the XDG_CONFIG_HOME environment variable.
+    The ~/.config/gxkb/flags path should not work.
+  * Added man page.
+  * Added support for Clang C/C++ compiler.
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Sat, 28 Mar 2015 11:23:54 +0200
+
 gxkb (0.7.3) unstable; urgency=low
 
   * Fixed unexpected behavior of gxkb with A4tech KV-300H keyboard

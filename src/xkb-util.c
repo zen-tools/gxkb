@@ -38,8 +38,8 @@ xkb_util_get_flag_filename( const gchar* group_name )
     gchar* filename = g_strconcat( flag_name, ".png", NULL );
     g_free( flag_name );
 
-    // Try to get image from user config directory
-    filepath = g_strjoin( "/", xkb_util_get_config_dir(),
+    // Try to get image from user data directory
+    filepath = g_strjoin( "/", xkb_util_get_data_dir(),
                                  "flags", filename, NULL );
 
     if( g_file_test( filepath, G_FILE_TEST_EXISTS ) )
@@ -105,9 +105,31 @@ xkb_util_normalize_group_name( const gchar* group_name )
 }
 
 gchar*
+xkb_util_get_data_dir( void )
+{
+    gchar *data_path = (gchar *)(
+        ( g_getenv( "XDG_DATA_HOME" ) == NULL )
+        ? g_strjoin( "/", g_get_home_dir(), ".local/share", NULL )
+        : g_getenv( "XDG_DATA_HOME" )
+    );
+
+    data_path = (gchar*)g_strjoin(
+        "/",
+        data_path,
+        PACKAGE_NAME,
+        NULL
+    );
+
+    if( !g_file_test( data_path, G_FILE_TEST_EXISTS ) )
+        g_mkdir_with_parents( data_path, 0700 );
+
+    return data_path;
+}
+
+gchar*
 xkb_util_get_config_dir( void )
 {
-    const gchar *config_path = (
+    gchar *config_path = (gchar*)(
         ( g_getenv( "XDG_CONFIG_HOME" ) == NULL )
         ? g_strjoin( "/", g_get_home_dir(), ".config", NULL )
         : g_getenv( "XDG_CONFIG_HOME" )
@@ -129,7 +151,7 @@ xkb_util_get_config_dir( void )
 gchar*
 xkb_util_get_config_file( void )
 {
-    char *config_path = xkb_util_get_config_dir();
+    gchar *config_path = xkb_util_get_config_dir();
 
     return g_strjoin(
         "/",

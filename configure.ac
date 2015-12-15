@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.7.3], [admin@linuxhub.ru],[gxkb],[https://sf.net/p/gxkb])
+AC_INIT([gxkb], [0.7.4], [admin@linuxhub.ru],[gxkb],[https://sf.net/p/gxkb])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([src/gxkb.c])
 AC_CONFIG_HEADERS([src/config.h])

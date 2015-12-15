@@ -57,7 +57,7 @@ gtk_status_icon_scrolled( GtkStatusIcon  *status_icon,
                           gpointer data )
 {
     if( status_icon == NULL )
-        return;
+        return FALSE;
 
     switch( event->direction )
     {

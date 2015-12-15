@@ -1,3 +1,9 @@
+March 28 2015:
+Version gxkb 0.7.4 released.
+  * Closed bug 1397447 ( https://bugs.launchpad.net/gxkb/+bug/1397447 )
+  * Added man page
+  * Added support for Clang C/C++ compiler
+
 October 05 2014:
 Version gxkb 0.7.3 released.
   * Fixed unexpected behavior of gxkb with A4tech KV-300H keyboard
