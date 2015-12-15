@@ -1,8 +1,10 @@
-AC_INIT([gxkb], [0.5], [zen@root.ua])
+AC_INIT([gxkb], [0.6], [zen@root.ua])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([gxkb.c])
 AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
+AC_PROG_RANLIB
+AM_PROG_CC_C_O
 AC_HEADER_STDC
 PKG_PROG_PKG_CONFIG([0.20])
 PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.12.0])

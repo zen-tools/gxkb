@@ -9,14 +9,13 @@
 #   include "config.h"
 #endif
 
-#include <libxklavier/xklavier.h>
-#include <libwnck/libwnck.h>
 #include <getopt.h>
+#include <glib/gstdio.h>
+
 #include "common.h"
 #include "xkb-config.h"
 #include "xkb-util.h"
 #include "xkb-callbacks.h"
-
 
 /* ----------------------------------------------------------------- *
  *                           XKB Stuff                               *
@@ -106,10 +105,10 @@ xkb_free (t_xkb *xkb)
 
     g_free (xkb->settings);
 
-    g_object_unref (xkb->tray);
-
     gtk_widget_destroy (xkb->rb_mouse_popup);
     gtk_widget_destroy (xkb->lb_mouse_popup);
+
+    g_object_unref (xkb->tray);
 }
 
 void
@@ -120,7 +119,6 @@ xkb_save_config (t_xkb *xkb, const gchar *config_file)
     GKeyFile *cfg_file = g_key_file_new();
     g_key_file_set_list_separator (cfg_file, ',');
 
-    //g_key_file_set_integer(cfg_file, "xkb config", "display_type", xkb->display_type);
     g_key_file_set_integer(cfg_file, "xkb config", "group_policy", xkb->settings->group_policy);
     g_key_file_set_integer(cfg_file, "xkb config", "default_group", xkb->settings->default_group);
     g_key_file_set_boolean(cfg_file, "xkb config", "never_modify_config", xkb->settings->never_modify_config);
@@ -156,7 +154,6 @@ xkb_load_config (t_xkb *xkb, const gchar *filename)
         return FALSE;
     }
 
-    //xkb->display_type = g_key_file_get_integer(cfg_file, "xkb config", "display_type", NULL);
     xkb->settings->group_policy = g_key_file_get_integer(cfg_file, "xkb config", "group_policy",  NULL);
     if (xkb->settings->group_policy != GROUP_POLICY_GLOBAL)
     {
@@ -188,7 +185,6 @@ xkb_load_default (t_xkb *xkb)
     {
         xkb->settings->kbd_config = g_new0 (t_xkb_kbd_config, 1);
     }
-    //xkb->display_type = DISPLAY_TYPE_TEXT;
     xkb->settings->group_policy = GROUP_POLICY_PER_APPLICATION;
     xkb->settings->never_modify_config = FALSE;
     xkb->settings->kbd_config->model = g_strdup("pc105");
@@ -346,8 +342,8 @@ int main (int argc, char *argv[])
             g_fprintf(stderr, "%s\n\n%s\n%s\n%s\n",
                       "Usage: gxkb [arguments]",
                       "Options:",
-                      "-v, \t Display gxkb's version number.",
-                      "-h, \t Show this help.");
+                      "-v \t Display gxkb's version number.",
+                      "-h \t Show this help.");
             return 0;
             break;
         }

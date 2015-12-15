@@ -28,7 +28,6 @@
 #endif
 
 #include <glib.h>
-#include <glib/gstdio.h>
 #include <libxklavier/xklavier.h>
 
 typedef enum

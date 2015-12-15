@@ -1,3 +1,10 @@
+July 10 2013:
+Version gxkb 0.6 released.
+  * add comand line options -h -v
+  * created gxkb.desktop file for adding a menu item
+  * add the Debian packaging files
+  * by default installation prefix changed to /usr
+  
 March 28 2013:
 Version gxkb 0.5 released.
   * reduced dependence

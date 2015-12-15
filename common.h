@@ -27,24 +27,11 @@
 
 #include "xkb-config.h"
 
-#include <X11/Xlib.h>
-#include <gtk/gtk.h>
-#include <glib.h>
-
-typedef enum
-{
-    DISPLAY_TYPE_IMAGE = 0,
-    DISPLAY_TYPE_TEXT  = 1
-} t_display_type;
-
 typedef struct
 {
     GtkStatusIcon *tray;
 
-    t_display_type display_type;  /* display layout as image ot text */
     t_xkb_settings *settings;     /* per-app setting and default group */
-
-    gchar *filename;
 
     /* widgets */
     GtkWidget *lb_mouse_popup;

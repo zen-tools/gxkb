@@ -24,9 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 #include <glib.h>
-#include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 
 #include "xkb-config.h"
@@ -73,8 +71,8 @@ GdkFilterReturn     handle_xevent                       (GdkXEvent * xev,
         GdkEvent * event);
 
 void                xkb_config_update_configuration     (t_xkb_settings *settings);
-static void         xkb_config_free                     ();
-static void         xkb_config_initialize_xkb_options   (t_xkb_settings *settings);
+void         xkb_config_free                     ();
+void         xkb_config_initialize_xkb_options   (t_xkb_settings *settings);
 
 /* ---------------------- implementation ------------------------- */
 
@@ -118,7 +116,7 @@ xkb_config_initialize (t_xkb_settings *settings,
     return TRUE;
 }
 
-static void
+void
 xkb_config_initialize_xkb_options (t_xkb_settings *settings)
 {
     XklConfigRegistry *registry;
@@ -200,12 +198,10 @@ kbd_config_free (t_xkb_kbd_config *kbd_config)
     g_free (kbd_config->variants);
     g_free (kbd_config->toggle_option);
     g_free (kbd_config->compose_key_position);
-    kbd_config->model = NULL;
-
     g_free (kbd_config);
 }
 
-static void
+void
 xkb_config_free (void)
 {
     gint i;
@@ -253,7 +249,7 @@ xkb_config_finalize (void)
     gdk_window_remove_filter (NULL, (GdkFilterFunc) handle_xevent, NULL);
 }
 
-static gint
+gint
 xkb_config_get_current_group (void)
 {
     XklState* state = xkl_engine_get_current_state (config->engine);

@@ -1,0 +1,8 @@
+gxkb (0.6) unstable; urgency=low
+
+  * add comand line options -h -v
+  * created gxkb.desktop file for adding a menu item
+  * add the Debian packaging files
+  * by default installation prefix changed to /usr
+
+ -- Dmitriy Poltavchenko <zen@root.ua>  Wed, 10 Jul 2013 17:33:13 +0200

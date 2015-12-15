@@ -28,12 +28,9 @@
 #endif
 
 #include <gtk/gtk.h>
-#include <gdk/gdk.h>
 #include <libwnck/libwnck.h>
 
 #include "common.h"
-
-#include <stdio.h>
 
 void            xkb_active_window_changed    (WnckScreen *screen,
         WnckWindow *previously_active_window,

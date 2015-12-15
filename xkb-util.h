@@ -28,8 +28,6 @@
 #endif
 
 #include <glib.h>
-#include <gdk/gdk.h>
-#include <gtk/gtk.h>
 
 gchar*      xkb_util_get_flag_filename      (const gchar* group_name);
 
