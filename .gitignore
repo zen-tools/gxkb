@@ -1,3 +1,8 @@
+debian/autoreconf.*
+debian/files
+debian/gxkb.debhelper.log
+debian/gxkb.substvars
+debian/gxkb
 Makefile.in
 Makefile
 aclocal.m4
