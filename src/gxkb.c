@@ -1,6 +1,6 @@
 /* gxkb.c
  *
- * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2016 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,9 +51,10 @@ void            xkb_save_config                     ( t_xkb_settings *xkb,
 gboolean        xkb_load_config                     ( t_xkb_settings *xkb,
                                                       const gchar *filename );
 
-void            xkb_load_default                    ( t_xkb_settings *xkb );
+gboolean        xkb_is_config_changed               ( t_xkb_settings *xkb_old,
+                                                      t_xkb_settings *xkb_new );
 
-void            xkb_initialize_menu                 ( t_xkb_settings *xkb );
+void            xkb_load_default                    ( t_xkb_settings *xkb );
 
 void            xkb_refresh                         ( t_xkb_settings *xkb );
 
@@ -280,20 +281,31 @@ xkb_load_config( t_xkb_settings *xkb, const gchar *filename )
     return TRUE;
 }
 
-void
-xkb_load_default( t_xkb_settings *xkb )
+gboolean
+xkb_is_config_changed( t_xkb_settings *xkb_old, t_xkb_settings *xkb_new )
 {
-    if( xkb->kbd_config == NULL )
-    {
-        xkb->kbd_config = g_new0( t_xkb_kbd_config, 1 );
-    }
-    xkb->group_policy = GROUP_POLICY_PER_APPLICATION;
-    xkb->never_modify_config = FALSE;
-    xkb->kbd_config->model = g_strdup( "pc105" );
-    xkb->kbd_config->layouts = g_strdup( "us,ru" );
-    xkb->kbd_config->variants = g_strdup( "," );
-    xkb->kbd_config->toggle_option = g_strdup( "grp:alt_shift_toggle,grp_led:scroll,terminate:ctrl_alt_bksp" );
-    xkb->kbd_config->compose_key_position = g_strdup( "" );
+    if( xkb_old->group_policy != xkb_new->group_policy)
+        return TRUE;
+
+    if( xkb_old->never_modify_config != xkb_new->never_modify_config )
+        return TRUE;
+
+    if( g_strcmp0( xkb_old->kbd_config->model, xkb_new->kbd_config->model ) != 0 )
+        return TRUE;
+
+    if( g_strcmp0( xkb_old->kbd_config->layouts, xkb_new->kbd_config->layouts ) != 0 )
+        return TRUE;
+
+    if( g_strcmp0( xkb_old->kbd_config->variants, xkb_new->kbd_config->variants ) != 0 )
+        return TRUE;
+
+    if( g_strcmp0( xkb_old->kbd_config->toggle_option, xkb_new->kbd_config->toggle_option ) != 0 )
+        return TRUE;
+
+    if( g_strcmp0( xkb_old->kbd_config->compose_key_position, xkb_new->kbd_config->compose_key_position ) != 0 )
+        return TRUE;
+
+    return FALSE;
 }
 
 void
@@ -305,9 +317,9 @@ xkb_refresh( t_xkb_settings *xkb )
 int main( int argc, char *argv[] )
 {
     /* Initialize GTK+ */
-    g_log_set_handler( "Wnck", G_LOG_LEVEL_WARNING, (GLogFunc)gtk_false  , NULL );
     gtk_init( &argc, &argv );
     g_set_application_name( PACKAGE_NAME );
+    g_log_set_handler( "Wnck", G_LOG_LEVEL_WARNING, (GLogFunc)gtk_false  , NULL );
 
     const struct option longopts[] =
     {
@@ -350,30 +362,42 @@ int main( int argc, char *argv[] )
         }
     }
 
+    gchar *config_file = xkb_util_get_config_file();
+
     t_xkb_settings *xkb = xkb_new();
-
-    char *config_file = xkb_util_get_config_file();
-
-    if( !xkb_load_config( xkb, config_file ) )
-    {
-        xkb_load_default( xkb );
-        xkb_save_config( xkb, config_file );
-    }
+    if ( !xkb_load_config( xkb, config_file ) )
+        xkb->group_policy = GROUP_POLICY_PER_APPLICATION;
 
     if( xkb_config_initialize( xkb, xkb_state_changed, xkb ) )
         xkb_refresh( xkb );
 
     statusicon_new();
 
+    // Save original config
+    t_xkb_settings *orig_config = g_new0( t_xkb_settings, 1 );
+    xkb_load_config( orig_config, config_file );
+
     /* Enter the main loop */
     gtk_main();
 
-    if( !xkb->never_modify_config )
+    // Load config and check if it was not changed
+    t_xkb_settings *last_config = g_new0( t_xkb_settings, 1 );
+    xkb_load_config( last_config, config_file );
+    gboolean is_diff = xkb_is_config_changed( orig_config, last_config );
+
+    if ( is_diff )
+        g_warning("Config file was changed. Saving skipped.\n");
+    else if( xkb->never_modify_config )
+        g_warning("Saving skipped by your configuration.\n");
+    else
         xkb_save_config( xkb, config_file );
 
+    g_free( orig_config );
+    g_free( last_config );
     g_free( config_file );
     xkb_free( xkb );
     statusicon_free();
 
     return 0;
 }
+

@@ -1,6 +1,6 @@
 /* xkb-config.c
  *
- * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2016 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
@@ -415,7 +415,7 @@ xkb_config_update_settings( t_xkb_settings *settings, XklEngine *engine )
     g_free( settings->kbd_config->toggle_option );
     settings->kbd_config->toggle_option = NULL;
     g_free( settings->kbd_config->compose_key_position );
-    settings->kbd_config->compose_key_position = NULL;
+    settings->kbd_config->compose_key_position = g_strdup( "" );
     gchar **opt = config->config_rec->options;
     while( opt && *opt )
     {

@@ -1,3 +1,9 @@
+July 19 2016:
+Version gxkb 0.7.7 released.
+ * Suppress of libwnck warnings
+ * Use X11 keyboard layout at the first ran, instead of "us,ru" layouts
+ * Avoid overriding configuration if gxkb.cfg was changed
+
 August 22 2015:
 Version gxkb 0.7.6 released.
  * Prevent quit with dialogs open
@@ -69,3 +75,4 @@ Version gxkb 0.2 released.
 
 March 11 2013:
 Initial code base.
+

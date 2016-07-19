@@ -1,6 +1,6 @@
 /* xkb-util.h
  *
- * Copyright (C) 2015 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2016 Dmitriy Poltavchenko <admin@linuxhub.ru>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
