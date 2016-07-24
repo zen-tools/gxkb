@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: gxkb
-Source: http://sourceforge.net/projects/gxkb/files/
+Source: https://github.com/zen-tools/gxkb
 
 Files: *
 Copyright: 2013-2016, Dmitriy Poltavchenko <admin@linuxhub.ru>
