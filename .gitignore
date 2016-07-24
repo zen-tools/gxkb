@@ -33,3 +33,4 @@ src/gxkb
 src/*.o
 *.*~
 *.diff
+*.tar.gz
