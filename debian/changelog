@@ -1,10 +1,11 @@
-gxkb (0.7.7) unstable; urgency=medium
+gxkb (0.7.7-1) unstable; urgency=medium
 
   * Suppress of libwnck warnings
   * Use X11 keyboard layout at the first ran, instead of "us,ru" layouts
   * Avoid overriding configuration if gxkb.cfg was changed
+  * Updated link on the project home page
 
- -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Tue, 19 Jul 2016 22:41:05 +0300
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Mon, 08 Aug 2016 17:51:05 +0300
 
 gxkb (0.7.6) unstable; urgency=medium
 
