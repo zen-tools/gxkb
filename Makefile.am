@@ -6,7 +6,8 @@ SUBDIRS = src man doc data
 EXTRA_DIST = autogen.sh debian/watch \
              debian/source/format debian/changelog \
              debian/compat debian/control \
-             debian/copyright debian/rules
+             debian/copyright debian/rules \
+             README.md
 
 # Don't put .git directories in the distribution file
 dist-hook:
