@@ -284,6 +284,9 @@ xkb_load_config( t_xkb_settings *xkb, const gchar *filename )
 gboolean
 xkb_is_config_changed( t_xkb_settings *xkb_old, t_xkb_settings *xkb_new )
 {
+    if( !xkb_old->kbd_config || !xkb_new->kbd_config )
+        return FALSE;
+
     if( xkb_old->group_policy != xkb_new->group_policy)
         return TRUE;
 
@@ -400,4 +403,3 @@ int main( int argc, char *argv[] )
 
     return 0;
 }
-
