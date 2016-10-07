@@ -1,3 +1,7 @@
+October 07 2016:
+Version gxkb 0.7.8 released.
+ * Fix segmentation fault at exit when gxkb.cfg is not exists
+
 August 08 2016:
 Version gxkb 0.7.7 released.
  * Suppress of libwnck warnings
