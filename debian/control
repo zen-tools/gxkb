@@ -3,7 +3,10 @@ Priority: optional
 Section: x11
 Maintainer: Dmitriy Poltavchenko <admin@linuxhub.ru>
 Uploaders: Dmitriy Poltavchenko <admin@linuxhub.ru>
-Build-Depends: debhelper (>= 9), libgtk2.0-dev, libxklavier-dev (>= 5.0), libwnck-dev, dh-autoreconf
+Build-Depends: libgtk2.0-0 ( >= 2.12.0 ),
+  libxklavier16 ( >= 3.0 ), libwnck22 ( >= 2.22.0 ),
+  libgtk2.0-dev, libxklavier-dev (>= 5.0), libwnck-dev,
+  libappindicator-dev, debhelper, dh-make, dh-autoreconf
 Standards-Version: 3.9.8
 Homepage: https://zen-tools.github.io/gxkb
 Vcs-Git: https://github.com/zen-tools/gxkb.git
