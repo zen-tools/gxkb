@@ -23,48 +23,33 @@ The applet is written in `C` and uses `GTK+` library and therefore does not depe
 
 ### Debian
 
-* Old, **stable** version:
-    ```bash
-    sudo apt-get install gxkb
-    ```
-    Run it like `gxkb & 2>/dev/null` due to an unfortunate bug of applet issuing extra warnings to `stdout`.
-
-* Latest, **unstable** version:
-    ```bash
-    sudo apt-get -y install gxkb -t unstable
-    ```
-    Or, if you don't have `unstable` repo enabled:
-    ```bash
-    printf 'deb http://httpredir.debian.org/debian unstable main non-free contrib' > my_unstable.list
-    sudo mv my_unstable.list /etc/apt/sources.list.d
-    sudo apt-get update
-    sudo apt-get -y install gxkb -t unstable
-    sudo rm /etc/apt/sources.list.d/my_unstable.list
-    sudo apt-get update
-    ```
+```bash
+sudo apt-get install gxkb
+```
 
 ### Ubuntu
+
 ```bash
 sudo add-apt-repository ppa:zen-root/gxkb-stable
 sudo apt-get update
 sudo apt-get install gxkb
 ```
 
-### Arch
-
 ## **Building from source**
 
 * Install dependencies
+
     + Debian
 
         ```bash
         sudo apt-get install libwnck-dev libxklavier-dev libgtk2.0-dev
         ```
+
 * Build
 
     ```bash
-    wget https://github.com/zen-tools/gxkb/archive/v0.7.7.tar.gz
-    tar xvfz gxkb-0.7.7.tar.gz
+    wget https://github.com/zen-tools/gxkb/archive/v0.7.7.tar.gz -O gxkb-0.7.7.tar.gz
+    tar xzf gxkb-0.7.7.tar.gz
     cd gxkb-0.7.7
     ./configure && make && sudo make install
     ```
@@ -76,14 +61,61 @@ sudo apt-get install gxkb
     ```bash
     gxkb -v
     ```
+
 * Run from a terminal
 
     ```bash
     gxkb &
     ```
+
 * Run from a `dmenu` or `gmrun`
 
     ```bash
     gxkb
     ```
 
+## **Features**
+
+* [AppIndicator](https://wiki.ubuntu.com/DesktopExperienceTeam/ApplicationIndicators) support
+
+    To switch that off use the following command during building phase:
+
+    ```bash
+    ./configure --enable-appindicator=no && make && sudo make install
+    ```
+
+* Custom flags support
+
+    Put your flag images in `.local/share/gxkb/flags` in PNG format  
+    with the names like `<country code>.png`,
+    e.g. `us.png`, `ru.png`, `ua.png`  
+    and the sizes of 24x24 pixels each
+
+* Scrolling support
+
+    Switch layouts by scrolling while hovering over the flag
+
+* Sensible defaults
+
+    `Alt-Shift` to switch layouts, `Scroll Lock` led on to indicate alternate
+    layouts.  
+    Can be changed in `.config/gxkb/gxkb.cfg`.
+
+## **Known issues**
+
+* In Ubuntu with AppIndicator enabled there may be issues when the
+  system layout switcher <code>indicator&#8209;keyboard</code> uses the same
+  key combination.  
+  One possible solution to this may be to assign an unused key combination for
+  <code>indicator&#8209;keyboard</code>.  
+  Another solution may be to remove the package
+  <code>indicator&#8209;keyboard</code>, but that will also remove the Unity
+  control center, which will be replaced by a Gnome control center.
+
+* In Elementary OS Freya `gxkb` does not work. Trying to figure out why.
+
+* When using more than one layout switcher during switching windows there may
+  be incorrect behavior of layout switching.  
+  In Gnome/Unity it can be solved by disabling the option of layout
+  inheritance from parent window and disabling the option of splitting layout
+  between windows in system layout switcher.
