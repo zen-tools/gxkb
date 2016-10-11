@@ -2,11 +2,8 @@
 
 `X11` keyboard layout indicator and switcher
 
-![screenshot 1](https://dl.dropboxusercontent.com/u/34413642/gxkb/gxkb%20screenshot.png "gxkb about 1")
-
-![screenshot 2](https://dl.dropboxusercontent.com/u/34413642/gxkb/gxkb%20screenshot%200.png "gxkb about 2")
-![screenshot 3](https://dl.dropboxusercontent.com/u/34413642/gxkb/gxkb%20screenshot%201.png "gxkb layouts")
-![screenshot 4](https://dl.dropboxusercontent.com/u/34413642/gxkb/gxkb%20screenshot%202.png "gxkb menu")
+![screenshot 3](https://zen-tools.github.io/gxkb/images/gxkb_tray_layouts.png "gxkb layouts")
+![screenshot 4](https://zen-tools.github.io/gxkb/images/gxkb_tray_menu.png "gxkb menu")
 
 ## **Description**
 `gxkb` is a tiny indicator applet which allows to quickly switch between different keyboard layouts in `X`.  
@@ -48,9 +45,9 @@ sudo apt-get install gxkb
 * Build
 
     ```bash
-    wget https://github.com/zen-tools/gxkb/archive/v0.7.7.tar.gz -O gxkb-0.7.7.tar.gz
-    tar xzf gxkb-0.7.7.tar.gz
-    cd gxkb-0.7.7
+    wget https://github.com/zen-tools/gxkb/archive/master.tar.gz -O gxkb.tar.gz
+    tar xzf gxkb.tar.gz
+    cd gxkb-master
     ./configure && make && sudo make install
     ```
 
@@ -66,12 +63,6 @@ sudo apt-get install gxkb
 
     ```bash
     gxkb &
-    ```
-
-* Run from a `dmenu` or `gmrun`
-
-    ```bash
-    gxkb
     ```
 
 ## **Features**
@@ -95,11 +86,20 @@ sudo apt-get install gxkb
 
     Switch layouts by scrolling while hovering over the flag
 
-* Sensible defaults
+* Using Scroll Lock led to indicate alternate layouts
 
-    `Alt-Shift` to switch layouts, `Scroll Lock` led on to indicate alternate
-    layouts.  
-    Can be changed in `.config/gxkb/gxkb.cfg`.
+    Can be changed in `.config/gxkb/gxkb.cfg`
+
+## **Configuration**
+
+Configuration is done via config file: `.config/gxkb/gxkb.cfg`
+
+The most interesting options are:  
+`layouts=us,ru,ua`  
+`toggle_option=grp:alt_shift_toggle,grp_led:scroll,terminate:ctrl_alt_bksp`
+
+Instead of `grp:alt_shift_toggle` you can use whatever the following command gives you:  
+`grep grp:.*toggle /usr/share/X11/xkb/rules/base.lst`  
 
 ## **Known issues**
 
