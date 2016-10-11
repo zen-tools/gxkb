@@ -103,19 +103,37 @@ Instead of `grp:alt_shift_toggle` you can use whatever the following command giv
 
 ## **Known issues**
 
-* In Ubuntu with AppIndicator enabled there may be issues when the
-  system layout switcher <code>indicator&#8209;keyboard</code> uses the same
-  key combination.  
-  One possible solution to this may be to assign an unused key combination for
-  <code>indicator&#8209;keyboard</code>.  
+* In Elementary OS Freya `gxkb` does not work. Trying to figure out why.
+
+* In Gnome2/Gnome3, Unity, E17, possibly in KDE3/KDE4:  
+  **Q**: _The layout does not get changed properly while switching between
+  windows._  
+  **A**: In your DE settings find keyboard layout control settings, disable
+  the inheriting of the layouts from parent window and disable splitting
+  layouts between windows.
+
+* In Gnome3/Unity:  
+  **Q**: _The layout icon is not displayed in system tray area._  
+  **A**: Due to different versions of Gnome3 there is no easy answer, Google
+  might help to find the right one.  
+  But in fact `gxkb` works under the hood, so you can use the Gnome3/Unity
+  system indicators for icon displaying, just don't forget to disable the
+  splitting layouts between different windows.
+
+* In XFCE 4.12:  
+  **Q**: _The layout icon is not displayed in system tray area._  
+  **A**: In "sessions and startup" settings try to find and disable
+  <code>indicator&#8209;application&#8209;service</code>.  
+  More details [here](http://www.linuxhub.ru/viewtopic.php?p=6347#p6347) and
+  [there](https://forum.xfce.org/viewtopic.php?pid=32908#p32908).
+
+* In Unity + AppIndicator:  
+  **Q**: _The layout switching does not work._  
+  **A**: It can happen when the system layout switcher
+  <code>indicator&#8209;keyboard</code> uses the same key combination.  
+  One possible solution to this may be to assign an unused key combination
+  for <code>indicator&#8209;keyboard</code>.  
   Another solution may be to remove the package
   <code>indicator&#8209;keyboard</code>, but that will also remove the Unity
   control center, which will be replaced by a Gnome control center.
 
-* In Elementary OS Freya `gxkb` does not work. Trying to figure out why.
-
-* When using more than one layout switcher during switching windows there may
-  be incorrect behavior of layout switching.  
-  In Gnome/Unity it can be solved by disabling the option of layout
-  inheritance from parent window and disabling the option of splitting layout
-  between windows in system layout switcher.
