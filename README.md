@@ -2,8 +2,8 @@
 
 `X11` keyboard layout indicator and switcher
 
-![screenshot 3](https://zen-tools.github.io/gxkb/images/gxkb_tray_layouts.png "gxkb layouts")
-![screenshot 4](https://zen-tools.github.io/gxkb/images/gxkb_tray_menu.png "gxkb menu")
+![screenshot 1](https://zen-tools.github.io/gxkb/images/gxkb_tray_layouts.png "gxkb layouts")
+![screenshot 2](https://zen-tools.github.io/gxkb/images/gxkb_tray_menu.png "gxkb menu")
 
 ## **Description**
 `gxkb` is a tiny indicator applet which allows to quickly switch between different keyboard layouts in `X`.  
