@@ -26,6 +26,7 @@ sudo apt-get install gxkb
 
 ### Ubuntu
 
+* `gxkb` already exists in Ubuntu Universe Repository, but it's compiled without AppIndicator support. So, if you need to run `gxkb` in Unity you definitely should use version from ppa:
 ```bash
 sudo add-apt-repository ppa:zen-root/gxkb-stable
 sudo apt-get update
