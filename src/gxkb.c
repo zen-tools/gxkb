@@ -56,8 +56,6 @@ gboolean        xkb_is_config_changed               ( t_xkb_settings *xkb_old,
 
 void            xkb_load_default                    ( t_xkb_settings *xkb );
 
-void            xkb_refresh                         ( t_xkb_settings *xkb );
-
 /* ================================================================== *
  *                        Implementation                              *
  * ================================================================== */
@@ -68,7 +66,7 @@ xkb_state_changed( gint current_group,
                    gpointer user_data )
 {
     t_xkb_settings *xkb = (t_xkb_settings*)user_data;
-    xkb_refresh( xkb );
+    statusicon_update_current_image();
 
     if( config_changed )
         statusicon_update_menu();
@@ -311,15 +309,9 @@ xkb_is_config_changed( t_xkb_settings *xkb_old, t_xkb_settings *xkb_new )
     return FALSE;
 }
 
-void
-xkb_refresh( t_xkb_settings *xkb )
-{
-    statusicon_update_current_image();
-}
-
 int main( int argc, char *argv[] )
 {
-    /* Initialize GTK+ */
+    // Initialize GTK+
     gtk_init( &argc, &argv );
     g_set_application_name( PACKAGE_NAME );
     g_log_set_handler( "Wnck", G_LOG_LEVEL_WARNING, (GLogFunc)gtk_false  , NULL );
@@ -334,7 +326,7 @@ int main( int argc, char *argv[] )
     int index = 0;
     int iarg  = 0;
 
-    //turn off getopt error message
+    // turn off getopt error message
     opterr = 0;
 
     while( iarg != -1 )
@@ -367,12 +359,22 @@ int main( int argc, char *argv[] )
 
     gchar *config_file = xkb_util_get_config_file();
 
+    gboolean first_run = FALSE;
     t_xkb_settings *xkb = xkb_new();
-    if ( !xkb_load_config( xkb, config_file ) )
+    if( !xkb_load_config( xkb, config_file ) )
+    {
+        first_run = TRUE;
         xkb->group_policy = GROUP_POLICY_PER_APPLICATION;
+    }
 
-    if( xkb_config_initialize( xkb, xkb_state_changed, xkb ) )
-        xkb_refresh( xkb );
+    if( !xkb_config_initialize( xkb, xkb_state_changed, xkb ) )
+    {
+        g_fprintf( stderr, "Can't get instance of the X display.\n" );
+        return 1;
+    }
+
+    if( first_run )
+        xkb_save_config( xkb, config_file );
 
     statusicon_new();
 
@@ -388,7 +390,7 @@ int main( int argc, char *argv[] )
     xkb_load_config( last_config, config_file );
     gboolean is_diff = xkb_is_config_changed( orig_config, last_config );
 
-    if ( is_diff )
+    if( is_diff )
         g_warning("Config file was changed. Saving skipped.\n");
     else if( xkb->never_modify_config )
         g_warning("Saving skipped by your configuration.\n");
