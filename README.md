@@ -42,6 +42,10 @@ sudo apt-get install gxkb
         ```bash
         sudo apt-get install libwnck-dev libxklavier-dev libgtk2.0-dev
         ```
+        For AppIndicator support:
+        ```bash
+        sudo apt-get install libappindicator-dev
+        ```
 
 * Build
 
@@ -49,7 +53,15 @@ sudo apt-get install gxkb
     wget https://github.com/zen-tools/gxkb/archive/master.tar.gz -O gxkb.tar.gz
     tar xzf gxkb.tar.gz
     cd gxkb-master
-    ./configure && make && sudo make install
+    ./configure
+    ```
+    For AppIndicator support:
+    ```bash
+    ./configure --enable-appindicator=yes
+    ```
+    Then:
+    ```bash
+    make && sudo make install
     ```
 
 ## **Usage**
@@ -73,7 +85,7 @@ sudo apt-get install gxkb
     To switch that off use the following command during building phase:
 
     ```bash
-    ./configure --enable-appindicator=no && make && sudo make install
+    ./configure --enable-appindicator=no
     ```
 
 * Custom flags support
