@@ -147,10 +147,6 @@ statusicon_update_menu( void )
 {
     // Left button click menu
     gint i;
-    GdkPixbuf *handle      = NULL;
-    gchar     *imgfilename = NULL;
-    GtkWidget *image       = NULL;
-    GtkWidget *menu_item   = NULL;
 
     statusicon_destroy_menu( lb_mouse_popup );
 
@@ -163,8 +159,8 @@ statusicon_update_menu( void )
     {
         gchar *layout_string = NULL;
 
-        imgfilename = xkb_util_get_flag_filename( xkb_config_get_group_name( i ) );
-        handle = gdk_pixbuf_new_from_file_at_scale( imgfilename, width, height, TRUE, NULL );
+        gchar *imgfilename = xkb_util_get_flag_filename( xkb_config_get_group_name( i ) );
+        GdkPixbuf *handle = gdk_pixbuf_new_from_file_at_scale( imgfilename, width, height, TRUE, NULL );
         g_free( imgfilename );
 
         layout_string = xkb_util_get_layout_string( xkb_config_get_group_name( i ),
@@ -172,7 +168,7 @@ statusicon_update_menu( void )
 
         layout_string = g_ascii_strup( layout_string, -1 );
 
-        menu_item = gtk_image_menu_item_new_with_label( layout_string );
+        GtkWidget *menu_item = gtk_image_menu_item_new_with_label( layout_string );
         g_free( layout_string );
 
         g_signal_connect( G_OBJECT( menu_item ), "activate",
@@ -180,7 +176,7 @@ statusicon_update_menu( void )
 
         if( handle )
         {
-            image = gtk_image_new();
+            GtkWidget *image = gtk_image_new();
 
             gtk_image_set_from_pixbuf( GTK_IMAGE( image ), handle );
             gtk_widget_show( image );
@@ -246,7 +242,6 @@ statusicon_destroy_menu( GtkWidget *menu )
         gtk_widget_destroy( menu );
         g_object_ref_sink( menu );
         g_object_unref( menu );
-        menu = NULL;
     }
 }
 

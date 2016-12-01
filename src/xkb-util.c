@@ -74,36 +74,6 @@ xkb_util_get_layout_string( const gchar *group_name, const gchar *variant )
 }
 
 gchar*
-xkb_util_normalize_group_name( const gchar* group_name )
-{
-    const gchar *c;
-    gchar *result;
-    gint cut_length;
-    gint index_of_na = -1;
-
-    if( group_name == NULL )
-        return NULL;
-
-    if( strlen( group_name ) <= 3 )
-        return g_strdup( group_name );
-
-    for( c = group_name; *c; c++ )
-    {
-        if( !( ( *c >= 'a' && *c <= 'z' ) || ( *c >= 'A' && *c <= 'Z' ) ) )
-        {
-            index_of_na = c - group_name;
-            break;
-        }
-    }
-
-    cut_length = ( index_of_na != -1 && index_of_na <= 3 ) ? index_of_na : 3;
-
-    result = g_strndup( group_name, cut_length );
-
-    return result;
-}
-
-gchar*
 xkb_util_get_data_dir( void )
 {
     gchar *data_path = (gchar *)(
@@ -163,4 +133,3 @@ xkb_util_get_config_file( void )
         NULL
     );
 }
-

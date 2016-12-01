@@ -80,8 +80,6 @@ gboolean          xkb_config_next_group                   ( void );
 
 gboolean          xkb_config_prev_group                   ( void );
 
-gint              xkb_config_variant_index_for_group      ( gint group );
-
 void              xkb_config_window_changed               ( guint new_window_id,
                                                             guint application_id );
 
@@ -90,4 +88,3 @@ void              xkb_config_application_closed           ( guint application_id
 void              xkb_config_window_closed                ( guint window_id );
 
 #endif
-
