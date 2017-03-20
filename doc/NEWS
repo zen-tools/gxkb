@@ -1,3 +1,9 @@
+March 20 2017:
+Version gxkb 0.7.9 released.
+ * Take care of new keyboards connection.
+ * Do not reset keyboard layout if new configuration contains the same keyboard layouts as in previous configuration.
+ * Create config file at startup (fix regression).
+
 October 07 2016:
 Version gxkb 0.7.8 released.
  * Fix segmentation fault at exit when gxkb.cfg is not exists

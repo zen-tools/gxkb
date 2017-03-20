@@ -1,3 +1,11 @@
+gxkb (0.7.9) unstable; urgency=medium
+
+  * Take care of new keyboards connection
+  * Do not reset keyboard layout if new configuration contains the same keyboard layouts as in previous configuration.
+  * Create config file at startup (fix regression).
+
+ -- Dmitriy Poltavchenko <admin@linuxhub.ru>  Mon, 20 Mar 2017 23:45:32 +0200
+
 gxkb (0.7.8) unstable; urgency=medium
 
   * Fix segmentation fault at exit when gxkb.cfg is not exists

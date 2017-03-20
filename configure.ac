@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.7.8], [admin@linuxhub.ru], [gxkb], [https://zen-tools.github.io/gxkb])
+AC_INIT([gxkb], [0.7.9], [admin@linuxhub.ru], [gxkb], [https://zen-tools.github.io/gxkb])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([src/gxkb.c])
 AC_CONFIG_HEADERS([src/config.h])
@@ -52,7 +52,7 @@ AM_CONDITIONAL(HAVE_APPINDICATOR, test x$enable_appindicator = xyes)
 AC_SUBST(APPINDICATOR_CFLAGS)
 AC_SUBST(APPINDICATOR_LIBS)
 
-AC_DEFINE(AUTHORS, ["Dmitriy Poltavchenko <admin@linuxhub.ru>\nAlexander Iliev <sasoiliev@mamul.org>"], [list of authors])
+AC_DEFINE(AUTHORS, ["Dmitriy Poltavchenko <admin@linuxhub.ru>\nMichael Ivanchenko <ivanchenko.michael.work@gmail.com>"], [list of authors])
 AC_DEFINE(COPYRIGHT, ["Copyright (C) 2013-2016 Dmitriy Poltavchenko"], [copyright])
 AC_DEFINE(DESCRIPTION, ["X11 Keyboard switcher"], [description])
 
