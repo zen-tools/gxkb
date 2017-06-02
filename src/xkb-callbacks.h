@@ -1,6 +1,6 @@
 /* xkb-callbacks.h
  *
- * Copyright (C) 2016 Dmitriy Poltavchenko <admin@linuxhub.ru>
+ * Copyright (C) 2016 Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *
@@ -46,4 +46,3 @@ void            xkb_about                       ( void );
 void            xkb_main_quit                   ( void );
 
 #endif
-
