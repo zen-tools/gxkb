@@ -1,3 +1,10 @@
+gxkb (0.8.0) unstable; urgency=medium
+
+  * Added flag for cz_qwerty layout.
+  * Fixed bug when gxkb rewrites xmodmap mappings if never_modify_config is set.
+
+ -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Thu, 24 Aug 2017 13:46:38 +0300
+
 gxkb (0.7.9) unstable; urgency=medium
 
   * Take care of new keyboards connection

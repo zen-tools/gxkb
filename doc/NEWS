@@ -1,3 +1,8 @@
+August 24 2017:
+Version gxkb 0.8.0 released.
+ * Added flag for cz_qwerty layout.
+ * Fixed bug when gxkb rewrites xmodmap mappings.
+
 March 20 2017:
 Version gxkb 0.7.9 released.
  * Take care of new keyboards connection.
