@@ -8,5 +8,5 @@ install:
   - ./autogen.sh
 script:
   - echo "Testing Debian package build"
-  - dpkg-buildpackage -us -uc -rfakeroot
+  - dpkg-buildpackage -us -uc -rfakeroot -b
 
