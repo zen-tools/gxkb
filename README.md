@@ -1,4 +1,5 @@
 # **gxkb**
+[![Build Status](https://travis-ci.org/zen-tools/gxkb.svg?branch=master)](https://travis-ci.org/zen-tools/gxkb)
 
 `X11` keyboard layout indicator and switcher
 
