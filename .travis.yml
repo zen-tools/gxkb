@@ -1,11 +1,12 @@
-sudo: required
-language: generic
-
-services:
-  - docker
-
+language: c
+compiler:
+  - clang
+  - gcc
+install:
+  - sudo apt-get update
+  - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y libwnck-dev libxklavier-dev libgtk2.0-dev dh-autoreconf devscripts fakeroot
+  - ./autogen.sh
 script:
-  - wget -O- http://travis.debian.net/script.sh | sh -
+  - echo "Testing Debian package build"
+  - dpkg-buildpackage -us -uc -rfakeroot
 
-if:
-  tag IS blank
