@@ -54,6 +54,7 @@ sudo apt-get install gxkb
     wget https://github.com/zen-tools/gxkb/archive/master.tar.gz -O gxkb.tar.gz
     tar xzf gxkb.tar.gz
     cd gxkb-master
+    ./autogen.sh
     ./configure
     ```
     For AppIndicator support:
