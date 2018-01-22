@@ -125,7 +125,7 @@ statusicon_update_current_image( void )
         if( trayicon == NULL )
             return;
 
-        GdkPixbuf *pixmap = gdk_pixbuf_new_from_file_at_scale( filepath, 24, 24, FALSE, NULL );
+        GdkPixbuf *pixmap = gdk_pixbuf_new_from_file( filepath, NULL );
         if( !pixmap )
         {
             g_fprintf( stderr, "Can't load image from %s\n", filepath );
