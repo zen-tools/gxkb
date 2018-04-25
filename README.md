@@ -139,8 +139,7 @@ Instead of `grp:alt_shift_toggle` you can use whatever the following command giv
   **Q**: _The layout icon is not displayed in system tray area._  
   **A**: In "sessions and startup" settings try to find and disable
   <code>indicator&#8209;application&#8209;service</code>.  
-  More details [here](http://www.linuxhub.ru/viewtopic.php?p=6347#p6347) and
-  [there](https://forum.xfce.org/viewtopic.php?pid=32908#p32908).
+  More details [here](https://forum.xfce.org/viewtopic.php?pid=32908#p32908).
 
 * In Unity + AppIndicator:  
   **Q**: _The layout switching does not work._  
