@@ -1,3 +1,4 @@
+debian/.debhelper/*
 debian/debhelper-build-stamp
 debian/autoreconf.*
 debian/files
