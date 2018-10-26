@@ -48,6 +48,11 @@ statusicon_new( void )
                           G_CALLBACK( gtk_status_icon_popup_menu ), NULL );
     #endif
 
+    icon_cache = g_hash_table_new_full( g_str_hash,
+                                        g_str_equal,
+                                        g_free,
+                                        g_object_unref);
+
     statusicon_update_menu();
     statusicon_update_current_image();
 }
@@ -125,12 +130,19 @@ statusicon_update_current_image( void )
         if( trayicon == NULL )
             return;
 
-        GdkPixbuf *pixmap = gdk_pixbuf_new_from_file( filepath, NULL );
+        GdkPixbuf *pixmap;
+        if( !g_hash_table_lookup_extended( icon_cache, filepath, NULL, (gpointer) &pixmap ) )
+        {
+            pixmap = gdk_pixbuf_new_from_file( filepath, NULL );
+            g_hash_table_insert (icon_cache, g_strdup (filepath), pixmap);
+        }
+
         if( !pixmap )
         {
             g_fprintf( stderr, "Can't load image from %s\n", filepath );
             return;
         }
+
         gtk_status_icon_set_from_pixbuf( trayicon, pixmap );
         gtk_status_icon_set_tooltip( trayicon, g_ascii_strup( group_name, -1 ) );
     }
@@ -250,6 +262,8 @@ statusicon_free( void )
 {
     statusicon_destroy_menu( rb_mouse_popup );
     statusicon_destroy_menu( lb_mouse_popup );
+
+    g_hash_table_destroy( icon_cache );
 
     if( trayicon )
         g_object_unref( trayicon );

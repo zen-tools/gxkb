@@ -42,6 +42,7 @@ GtkWidget       *rb_mouse_popup;
 AppIndicator    *appindicator;
 #endif
 GtkStatusIcon   *trayicon;
+GHashTable      *icon_cache;
 statusicon_type icon_type;
 
 void            statusicon_new                      ( void );

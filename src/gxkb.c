@@ -343,6 +343,7 @@ int main( int argc, char *argv[] )
             #else
                 g_fprintf( stderr, "AppIndicator support - No\n" );
             #endif
+            g_fprintf( stderr, "Icon cache - Yes\n" );
             return 0;
             break;
 
