@@ -1,5 +1,5 @@
 # **gxkb**
-[![Build Status](https://travis-ci.org/zen-tools/gxkb.svg?branch=master)](https://travis-ci.org/zen-tools/gxkb)
+[![Latest release](https://img.shields.io/github/release/zen-tools/gxkb.svg)](https://github.com/zen-tools/gxkb/releases) [![Build Status](https://travis-ci.org/zen-tools/gxkb.svg?branch=master)](https://travis-ci.org/zen-tools/gxkb)
 
 `X11` keyboard layout indicator and switcher
 
@@ -150,4 +150,3 @@ Instead of `grp:alt_shift_toggle` you can use whatever the following command giv
   Another solution may be to remove the package
   <code>indicator&#8209;keyboard</code>, but that will also remove the Unity
   control center, which will be replaced by a Gnome control center.
-
