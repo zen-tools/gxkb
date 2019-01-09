@@ -1,3 +1,10 @@
+gxkb (0.8.1) unstable; urgency=medium
+
+  * Added icon cache for trayicon.
+  * Loading images for systray icon without scaling applying.
+
+ -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Wed, 09 Jan 2019 21:08:35 +0200
+
 gxkb (0.8.0) unstable; urgency=medium
 
   * Added flag for cz_qwerty layout.

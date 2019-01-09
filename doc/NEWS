@@ -1,3 +1,8 @@
+January 09 2019:
+Version gxkb 0.8.1 released.
+ * Added icon cache for trayicon.
+ * Loading images for systray icon without scaling applying.
+
 August 24 2017:
 Version gxkb 0.8.0 released.
  * Added flag for cz_qwerty layout.
@@ -90,4 +95,3 @@ Version gxkb 0.2 released.
 
 March 11 2013:
 Initial code base.
-

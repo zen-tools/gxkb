@@ -39,7 +39,7 @@ xkb_util_get_flag_filename( const gchar* group_name )
 
     // Try to get image from user data directory
     filepath = g_strjoin( "/", xkb_util_get_data_dir(),
-                                 "flags", filename, NULL );
+                          "flags", filename, NULL );
 
     if( g_file_test( filepath, G_FILE_TEST_EXISTS ) )
     {

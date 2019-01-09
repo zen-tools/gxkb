@@ -51,7 +51,7 @@ statusicon_new( void )
     icon_cache = g_hash_table_new_full( g_str_hash,
                                         g_str_equal,
                                         g_free,
-                                        g_object_unref);
+                                        g_object_unref );
 
     statusicon_update_menu();
     statusicon_update_current_image();

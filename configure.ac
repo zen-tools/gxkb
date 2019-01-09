@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.8.0], [poltavchenko.dmitriy@gmail.com], [gxkb], [https://zen-tools.github.io/gxkb])
+AC_INIT([gxkb], [0.8.1], [poltavchenko.dmitriy@gmail.com], [gxkb], [https://zen-tools.github.io/gxkb])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([src/gxkb.c])
 AC_CONFIG_HEADERS([src/config.h])
@@ -53,7 +53,7 @@ AC_SUBST(APPINDICATOR_CFLAGS)
 AC_SUBST(APPINDICATOR_LIBS)
 
 AC_DEFINE(AUTHORS, ["Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>\nMichael Ivanchenko <ivanchenko.michael.work@gmail.com>"], [list of authors])
-AC_DEFINE(COPYRIGHT, ["Copyright (C) 2013-2017 Dmitriy Poltavchenko"], [copyright])
+AC_DEFINE(COPYRIGHT, ["Copyright (C) 2013-2019 Dmitriy Poltavchenko"], [copyright])
 AC_DEFINE(DESCRIPTION, ["X11 Keyboard switcher"], [description])
 
 AC_DEFINE(WNCK_I_KNOW_THIS_IS_UNSTABLE, 1, [libwnck is happy with this])
