@@ -735,9 +735,6 @@ xkb_config_xkl_config_changed( XklEngine *engine )
     kbd_config_free( config->settings->kbd_config );
     config->settings->kbd_config = NULL;
     xkb_config_update_settings( config->settings, engine );
-
-    if( config->callback != NULL )
-        config->callback( xkb_config_get_current_group(), TRUE, config->callback_data );
 }
 
 void
