@@ -65,11 +65,12 @@ xkb_state_changed( gint current_group,
                    gboolean config_changed,
                    gpointer user_data )
 {
-    t_xkb_settings *xkb = (t_xkb_settings*)user_data;
-    statusicon_update_current_image();
+    // t_xkb_settings *xkb = (t_xkb_settings*)user_data;
 
     if( config_changed )
         statusicon_update_menu();
+    else
+        statusicon_update_current_image();
 }
 
 t_xkb_settings *
