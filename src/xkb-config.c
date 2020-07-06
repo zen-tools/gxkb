@@ -701,7 +701,7 @@ xkb_config_xkl_state_changed( XklEngine *engine,
 {
     if( change == GROUP_CHANGED )
     {
-        xkb_config_set_group( group );
+        config->current_group = group;
         switch( config->settings->group_policy )
         {
         case GROUP_POLICY_GLOBAL:
