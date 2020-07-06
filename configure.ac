@@ -34,7 +34,7 @@ AC_ARG_ENABLE(
 
 if test x$enable_appindicator = xauto ; then
     PKG_CHECK_EXISTS(
-        appindicator-0.1 >= $APPINDICATOR_REQUIRED_VERSION,
+        ayatana-appindicator-0.1 >= $APPINDICATOR_REQUIRED_VERSION,
         [enable_appindicator="yes"],
         [enable_appindicator="no"]
     )
@@ -43,7 +43,7 @@ fi
 if test x$enable_appindicator = xyes ; then
     PKG_CHECK_MODULES(
         APPINDICATOR,
-        [appindicator-0.1 >= $APPINDICATOR_REQUIRED_VERSION],
+        [ayatana-appindicator-0.1 >= $APPINDICATOR_REQUIRED_VERSION],
         [AC_DEFINE(HAVE_APPINDICATOR, 1, [Have AppIndicator])]
     )
 fi

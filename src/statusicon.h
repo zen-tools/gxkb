@@ -25,7 +25,7 @@
 #endif
 
 #ifdef HAVE_APPINDICATOR
-#   include <libappindicator/app-indicator.h>
+#   include <libayatana-appindicator/app-indicator.h>
 #endif
 
 #include <gtk/gtk.h>
