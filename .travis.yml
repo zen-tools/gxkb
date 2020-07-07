@@ -1,10 +1,12 @@
 language: c
+dist: bionic
+
 compiler:
   - clang
   - gcc
 install:
   - sudo apt-get update
-  - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y libwnck-dev libxklavier-dev libgtk2.0-dev dh-autoreconf libappindicator-dev dh-make devscripts fakeroot
+  - DEBIAN_FRONTEND=noninteractive sudo apt-get install -y libwnck-dev libxklavier-dev libgtk2.0-dev dh-autoreconf libayatana-appindicator-dev dh-make devscripts fakeroot
   - ./autogen.sh
 script:
   - echo "Testing Debian package build"
