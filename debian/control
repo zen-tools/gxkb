@@ -6,7 +6,7 @@ Uploaders: Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
 Build-Depends: libgtk2.0-0 ( >= 2.12.0 ),
   libxklavier16 ( >= 3.0 ), libwnck22 ( >= 2.22.0 ),
   libgtk2.0-dev, libxklavier-dev (>= 5.0), libwnck-dev,
-  libayatana-appindicator-dev, debhelper (>= 12), dh-make, dh-autoreconf
+  libayatana-appindicator-dev, debhelper (>= 10), dh-make, dh-autoreconf
 Standards-Version: 4.5.0
 Homepage: https://zen-tools.github.io/gxkb
 Vcs-Git: https://github.com/zen-tools/gxkb.git
