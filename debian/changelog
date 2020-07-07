@@ -1,3 +1,12 @@
+gxkb (0.8.2) unstable; urgency=medium
+
+  * Fixed segfault after executing setxkbmap
+  * Fixed ftbfs with GCC-10
+  * Fixed recursion in xkb_config_xkl_state_changed
+  * Merged ayatana-appindicator.patch from Debian
+
+ -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Tue, 07 Jul 2020 11:33:56 +0300
+
 gxkb (0.8.1) unstable; urgency=medium
 
   * Added icon cache for trayicon.

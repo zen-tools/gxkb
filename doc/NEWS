@@ -1,3 +1,10 @@
+July 07 2020:
+Version gxkb 0.8.2 released.
+ * Fixed segfault after executing setxkbmap
+ * Fixed ftbfs with GCC-10
+ * Fixed recursion in xkb_config_xkl_state_changed
+ * Merged ayatana-appindicator.patch from Debian
+
 January 09 2019:
 Version gxkb 0.8.1 released.
  * Added icon cache for trayicon.
