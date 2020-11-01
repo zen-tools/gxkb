@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.8.2], [poltavchenko.dmitriy@gmail.com], [gxkb], [https://zen-tools.github.io/gxkb])
+AC_INIT([gxkb], [0.9.0], [poltavchenko.dmitriy@gmail.com], [gxkb], [https://zen-tools.github.io/gxkb])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([src/gxkb.c])
 AC_CONFIG_HEADERS([src/config.h])
@@ -7,10 +7,10 @@ AC_PROG_RANLIB
 AM_PROG_CC_C_O
 AC_HEADER_STDC
 PKG_PROG_PKG_CONFIG([0.20])
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.12.0])
+PKG_CHECK_MODULES(GTK, [gtk+-3.0])
 PKG_CHECK_MODULES(GLIB, [glib-2.0 >= 2.16.0])
 PKG_CHECK_MODULES(LIBXKLAVIER, [libxklavier >= 3.0])
-PKG_CHECK_MODULES(LIBWNCK, [libwnck-1.0 >= 2.22.0])
+PKG_CHECK_MODULES(LIBWNCK, [libwnck-3.0])
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 AC_SUBST(GLIB_CFLAGS)
@@ -34,7 +34,7 @@ AC_ARG_ENABLE(
 
 if test x$enable_appindicator = xauto ; then
     PKG_CHECK_EXISTS(
-        ayatana-appindicator-0.1 >= $APPINDICATOR_REQUIRED_VERSION,
+        ayatana-appindicator3-0.1 >= $APPINDICATOR_REQUIRED_VERSION,
         [enable_appindicator="yes"],
         [enable_appindicator="no"]
     )
@@ -43,7 +43,7 @@ fi
 if test x$enable_appindicator = xyes ; then
     PKG_CHECK_MODULES(
         APPINDICATOR,
-        [ayatana-appindicator-0.1 >= $APPINDICATOR_REQUIRED_VERSION],
+        [ayatana-appindicator3-0.1 >= $APPINDICATOR_REQUIRED_VERSION],
         [AC_DEFINE(HAVE_APPINDICATOR, 1, [Have AppIndicator])]
     )
 fi
