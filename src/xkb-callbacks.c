@@ -77,7 +77,7 @@ xkb_about( void )
             gtk_widget_render_icon_pixbuf(about_dialog, GTK_STOCK_ABOUT, GTK_ICON_SIZE_DIALOG)
         );
 
-        const gchar* authors[] = { AUTHORS, NULL };
+        const gchar** authors =  g_strsplit( AUTHORS, "\n", -1 );
         gtk_about_dialog_set_authors( (GtkAboutDialog*)about_dialog, authors );
         gtk_about_dialog_set_program_name( (GtkAboutDialog*)about_dialog, PACKAGE );
         gtk_about_dialog_set_version( (GtkAboutDialog*)about_dialog, VERSION );
