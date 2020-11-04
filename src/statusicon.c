@@ -153,7 +153,7 @@ statusicon_update_current_image( void )
         }
 
         gtk_status_icon_set_from_pixbuf( trayicon, pixmap );
-	gtk_widget_set_tooltip_text( trayicon, g_ascii_strup( group_name, -1 ) );
+        gtk_status_icon_set_tooltip_text( trayicon, g_ascii_strup( group_name, -1 ) );
     }
     else if( icon_type == APPINDICATOR )
     {
@@ -220,7 +220,7 @@ statusicon_update_menu( void )
     if( icon_type == APPINDICATOR )
     {
         // Separator
-        mi = gtk_menu_item_new();
+        mi = gtk_separator_menu_item_new();
         gtk_widget_show( mi );
         gtk_menu_shell_append( GTK_MENU_SHELL( lb_mouse_popup ), mi );
         gtk_widget_set_sensitive( mi, FALSE );
@@ -238,7 +238,8 @@ statusicon_update_menu( void )
 
     if( icon_type == SYSTRAY )
     {
-        mi = gtk_menu_item_new();
+        // Separator
+        mi = gtk_separator_menu_item_new();
         gtk_widget_show( mi );
         gtk_menu_shell_append( GTK_MENU_SHELL( rb_mouse_popup ), mi );
         gtk_widget_set_sensitive( mi, FALSE );
