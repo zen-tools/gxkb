@@ -153,7 +153,7 @@ statusicon_update_current_image( void )
         }
 
         gtk_status_icon_set_from_pixbuf( trayicon, pixmap );
-        gtk_status_icon_set_tooltip( trayicon, g_ascii_strup( group_name, -1 ) );
+	gtk_widget_set_tooltip_text( trayicon, g_ascii_strup( group_name, -1 ) );
     }
     else if( icon_type == APPINDICATOR )
     {

@@ -79,7 +79,7 @@ xkb_about( void )
 
         const gchar* authors[] = { AUTHORS, NULL };
         gtk_about_dialog_set_authors( (GtkAboutDialog*)about_dialog, authors );
-        gtk_about_dialog_set_name( (GtkAboutDialog*)about_dialog, PACKAGE );
+        gtk_about_dialog_set_program_name( (GtkAboutDialog*)about_dialog, PACKAGE );
         gtk_about_dialog_set_version( (GtkAboutDialog*)about_dialog, VERSION );
         gtk_about_dialog_set_comments( (GtkAboutDialog*)about_dialog, DESCRIPTION );
         gtk_about_dialog_set_website( (GtkAboutDialog*)about_dialog, PACKAGE_URL );
