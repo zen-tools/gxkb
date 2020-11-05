@@ -74,10 +74,16 @@ xkb_about( void )
         GtkWidget* about_dialog = gtk_about_dialog_new();
         gtk_window_set_icon(
             (GtkWindow*)about_dialog,
-            gtk_widget_render_icon_pixbuf(about_dialog, GTK_STOCK_ABOUT, GTK_ICON_SIZE_DIALOG)
+            gtk_icon_theme_load_icon(
+                gtk_icon_theme_get_default(),
+                "gtk-about",
+                GTK_ICON_SIZE_DIALOG,
+                0,
+                NULL
+            )
         );
 
-        const gchar** authors =  g_strsplit( AUTHORS, "\n", -1 );
+        const gchar** authors = (const gchar**) g_strsplit( AUTHORS, "\n", -1 );
         gtk_about_dialog_set_authors( (GtkAboutDialog*)about_dialog, authors );
         gtk_about_dialog_set_program_name( (GtkAboutDialog*)about_dialog, PACKAGE );
         gtk_about_dialog_set_version( (GtkAboutDialog*)about_dialog, VERSION );

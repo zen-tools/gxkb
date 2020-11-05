@@ -74,9 +74,7 @@ gtk_status_icon_clicked( GtkStatusIcon *status_icon, gpointer data )
 
     if( xkb_config_get_group_count() > 2 )
     {
-        gtk_menu_popup( GTK_MENU( lb_mouse_popup ), NULL, NULL,
-                        gtk_status_icon_position_menu, status_icon,
-                        0, gtk_get_current_event_time() );
+        gtk_menu_popup_at_pointer( GTK_MENU( lb_mouse_popup ), NULL );
     }
     else
     {
@@ -116,9 +114,7 @@ gtk_status_icon_popup_menu( GtkStatusIcon *status_icon, guint button,
     if( status_icon == NULL )
         return;
 
-    gtk_menu_popup( GTK_MENU( rb_mouse_popup ),
-                    NULL, NULL, gtk_status_icon_position_menu, status_icon, button,
-                    activate_time );
+    gtk_menu_popup_at_pointer( GTK_MENU( rb_mouse_popup ), NULL );
 }
 
 void
@@ -231,7 +227,7 @@ statusicon_update_menu( void )
         rb_mouse_popup = gtk_menu_new();
     }
 
-    mi = gtk_image_menu_item_new_from_stock( GTK_STOCK_ABOUT, NULL );
+    mi = gtk_image_menu_item_new_from_stock( "gtk-about", NULL );
     g_signal_connect( G_OBJECT( mi ), "activate", (GCallback)xkb_about, NULL );
     gtk_menu_shell_append( GTK_MENU_SHELL( rb_mouse_popup ), mi );
     gtk_widget_show( mi );
@@ -245,7 +241,7 @@ statusicon_update_menu( void )
         gtk_widget_set_sensitive( mi, FALSE );
     }
 
-    mi = gtk_image_menu_item_new_from_stock( GTK_STOCK_QUIT, NULL );
+    mi = gtk_image_menu_item_new_from_stock( "gtk-quit", NULL );
     g_signal_connect( G_OBJECT( mi ), "activate", (GCallback)xkb_main_quit, NULL );
     gtk_menu_shell_append( GTK_MENU_SHELL( rb_mouse_popup ), mi );
     gtk_widget_show( mi );
