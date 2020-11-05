@@ -42,7 +42,7 @@ sudo apt-get install gxkb
     + Debian
 
         ```bash
-        sudo apt-get install libwnck3-dev libxklavier-dev libgtk-3-dev dh-autoreconf dh-make devscripts fakeroot
+        sudo apt-get install libwnck-3-dev libxklavier-dev libgtk-3-dev dh-autoreconf dh-make devscripts fakeroot
         ```
         For AppIndicator support:
         ```bash
