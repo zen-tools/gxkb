@@ -1,3 +1,10 @@
+gxkb (0.9.0) unstable; urgency=medium
+
+  * Moved on GTK3
+    thanks to Mateusz Łukasik <mati75@linuxmint.pl> for the patch
+
+ -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Fri, 11 Dec 2020 15:02:03 +0200
+
 gxkb (0.8.2) unstable; urgency=medium
 
   * Fixed segfault after executing setxkbmap

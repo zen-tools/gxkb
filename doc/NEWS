@@ -1,3 +1,8 @@
+December 11 2020:
+Version gxkb 0.9.0 released.
+ * Moved on GTK3
+   thanks to Mateusz Łukasik <mati75@linuxmint.pl> for the patch
+
 July 07 2020:
 Version gxkb 0.8.2 released.
  * Fixed segfault after executing setxkbmap
