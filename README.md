@@ -35,6 +35,12 @@ sudo apt-get update
 sudo apt-get install gxkb
 ```
 
+### Fedora
+
+```bash
+sudo dnf install gxkb
+```
+
 ## **Building from source**
 
 * Install dependencies
