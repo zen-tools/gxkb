@@ -128,7 +128,8 @@ void
 statusicon_update_current_image( void )
 {
     const gchar *group_name = xkb_config_get_group_name( -1 );
-    gchar *filepath = xkb_util_get_flag_filename( group_name );
+    const gchar *variant = xkb_config_get_variant( -1 );
+    gchar *filepath = xkb_util_get_flag_filename( group_name, variant );
 
     if( icon_type == SYSTRAY )
     {
@@ -176,7 +177,8 @@ statusicon_update_menu( void )
     {
         gchar *layout_string = NULL;
 
-        gchar *imgfilename = xkb_util_get_flag_filename( xkb_config_get_group_name( i ) );
+        gchar *imgfilename = xkb_util_get_flag_filename( xkb_config_get_group_name( i ),
+                                                         xkb_config_get_variant( i ) );
         GdkPixbuf *handle = gdk_pixbuf_new_from_file_at_scale( imgfilename, width, height, TRUE, NULL );
         g_free( imgfilename );
 

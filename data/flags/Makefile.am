@@ -4,7 +4,6 @@ images_DATA =        \
     bg.png           \
     by.png           \
     cz.png           \
-    cz_qwerty.png    \
     de.png           \
     ee.png           \
     gb.png           \

@@ -24,42 +24,40 @@
 #include "xkb-util.h"
 
 gchar*
-xkb_util_get_flag_filename( const gchar* group_name )
+xkb_util_get_flag_filename( const gchar* group_name, const gchar *variant )
 {
-    gchar* filepath;
-
     if( group_name == NULL )
         return NULL;
 
-    gchar *flag_name = g_ascii_strdown( group_name, -1 );
-    flag_name = g_strstrip( flag_name );
-
-    gchar* filename = g_strconcat( flag_name, ".png", NULL );
-    g_free( flag_name );
-
-    // Try to get image from user data directory
-    filepath = g_strjoin( "/", xkb_util_get_data_dir(),
-                          "flags", filename, NULL );
-
-    if( g_file_test( filepath, G_FILE_TEST_EXISTS ) )
+    GSList *flag_names = NULL;
+    if(variant && strlen( variant ) > 0)
     {
-        g_free( filename );
-        return filepath;
+        flag_names = g_slist_prepend(
+            flag_names,
+            g_strjoin(
+                "_", g_ascii_strdown( group_name, -1 ),
+                g_ascii_strdown( variant, -1 ), NULL
+            )
+        );
     }
+    flag_names = g_slist_prepend( flag_names, g_ascii_strdown( group_name, -1 ) );
+    flag_names = g_slist_prepend( flag_names, g_strdup("zz") );
+    flag_names = g_slist_reverse( flag_names );
 
-    // Try to get image from system directory
-    filepath = g_strjoin( "/", FLAGSDIR, filename, NULL );
+    gchar* file_path = NULL;
+    do {
+        gchar* flag_name = flag_names->data;
+        gchar* file_name = g_strconcat( flag_name, ".png", NULL );
+        file_path = g_strjoin( "/", xkb_util_get_data_dir(),
+                              "flags", file_name, NULL );
+        g_free( file_name );
 
-    g_free( filename );
+        if( g_file_test( file_path, G_FILE_TEST_EXISTS ) )
+            break;
+    } while( (flag_names = g_slist_next( flag_names )) );
 
-    if( !g_file_test( filepath, G_FILE_TEST_EXISTS ) )
-    {
-        filepath = g_strjoin( "/", FLAGSDIR, "zz.png", NULL );
-        if( !g_file_test( filepath, G_FILE_TEST_EXISTS ) )
-            return NULL;
-    }
-
-    return filepath;
+    g_slist_free( flag_names );
+    return file_path;
 }
 
 gchar*
