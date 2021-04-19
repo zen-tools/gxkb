@@ -29,7 +29,7 @@ xkb_util_get_flag_filename( const gchar* group_name, const gchar *variant )
     if( group_name == NULL )
         return NULL;
 
-    GSList *flag_names = NULL;
+    GSList* flag_names = NULL;
     if(variant && strlen( variant ) > 0)
     {
         flag_names = g_slist_prepend(
@@ -41,19 +41,32 @@ xkb_util_get_flag_filename( const gchar* group_name, const gchar *variant )
         );
     }
     flag_names = g_slist_prepend( flag_names, g_ascii_strdown( group_name, -1 ) );
-    flag_names = g_slist_prepend( flag_names, g_strdup("zz") );
+    flag_names = g_slist_prepend( flag_names, "zz" );
     flag_names = g_slist_reverse( flag_names );
 
     gchar* file_path = NULL;
     do {
-        gchar* flag_name = flag_names->data;
-        gchar* file_name = g_strconcat( flag_name, ".png", NULL );
-        file_path = g_strjoin( "/", xkb_util_get_data_dir(),
-                              "flags", file_name, NULL );
-        g_free( file_name );
+        gchar* file_name = g_strconcat( flag_names->data, ".png", NULL );
 
-        if( g_file_test( file_path, G_FILE_TEST_EXISTS ) )
+        // Try to get image from user data directory
+        gchar* data_dir = xkb_util_get_data_dir();
+        file_path = g_strjoin( "/", data_dir, "flags", file_name, NULL );
+        g_free( data_dir );
+        if( g_file_test( file_path, G_FILE_TEST_EXISTS ) ) {
+            g_free( file_name );
             break;
+        }
+        g_free( file_path );
+
+        // Try to get image from system directory
+        file_path = g_strjoin( "/", FLAGSDIR, file_name, NULL );
+        if( g_file_test( file_path, G_FILE_TEST_EXISTS ) ) {
+            g_free( file_name );
+            break;
+        }
+        g_free( file_path );
+
+        g_free( file_name );
     } while( (flag_names = g_slist_next( flag_names )) );
 
     g_slist_free( flag_names );
