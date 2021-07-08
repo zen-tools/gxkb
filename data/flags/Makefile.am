@@ -7,6 +7,7 @@ images_DATA =        \
     cz_qwerty.png    \
     de.png           \
     ee.png           \
+    epo.png          \
     gb.png           \
     es.png           \
     fi.png           \
