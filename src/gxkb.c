@@ -312,6 +312,7 @@ xkb_is_config_changed( t_xkb_settings *xkb_old, t_xkb_settings *xkb_new )
 
 int main( int argc, char *argv[] )
 {
+    gboolean show_tray = TRUE;
     // Initialize GTK+
     gtk_init( &argc, &argv );
     g_set_application_name( PACKAGE_NAME );
@@ -321,6 +322,7 @@ int main( int argc, char *argv[] )
     {
         { 0, 0, 0, 'v' },
         { 0, 0, 0, 'h' },
+        { 0, 0, 0, 'n' },
         { 0, 0, 0,  0  },
     };
 
@@ -332,7 +334,7 @@ int main( int argc, char *argv[] )
 
     while( iarg != -1 )
     {
-        iarg = getopt_long( argc, argv, "s:vh", longopts, &index );
+        iarg = getopt_long( argc, argv, "s:vhn", longopts, &index );
 
         switch( iarg )
         {
@@ -356,6 +358,10 @@ int main( int argc, char *argv[] )
                        "-h \t Show this help." );
             return 0;
             break;
+
+        case 'n':
+            show_tray = FALSE;
+            break;
         }
     }
 
@@ -378,7 +384,8 @@ int main( int argc, char *argv[] )
     if( first_run )
         xkb_save_config( xkb, config_file );
 
-    statusicon_new();
+    if( show_tray )
+        statusicon_new();
 
     // Save original config
     t_xkb_settings *orig_config = g_new0( t_xkb_settings, 1 );
