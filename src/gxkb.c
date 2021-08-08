@@ -351,10 +351,11 @@ int main( int argc, char *argv[] )
             break;
 
         case 'h':
-            g_fprintf( stderr, "%s\n\n%s\n%s\n%s\n",
+            g_fprintf( stderr, "%s\n\n%s\n%s\n%s\n%s\n",
                        "Usage: gxkb [arguments]",
                        "Options:",
                        "-v \t Display gxkb's version number.",
+                       "-n \t Disable system tray icon.",
                        "-h \t Show this help." );
             return 0;
             break;
