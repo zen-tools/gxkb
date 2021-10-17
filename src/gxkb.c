@@ -312,6 +312,10 @@ xkb_is_config_changed( t_xkb_settings *xkb_old, t_xkb_settings *xkb_new )
 
 int main( int argc, char *argv[] )
 {
+    bindtextdomain( "xkeyboard-config", "/usr/share/locale/" );
+    bind_textdomain_codeset( "xkeyboard-config", "UTF-8" );
+    textdomain( "xkeyboard-config" );
+
     // Initialize GTK+
     gtk_init( &argc, &argv );
     g_set_application_name( PACKAGE_NAME );

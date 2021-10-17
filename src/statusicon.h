@@ -30,6 +30,7 @@
 
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
+#include "gettext.h"
 
 #include "xkb-callbacks.h"
 #include "xkb-util.h"

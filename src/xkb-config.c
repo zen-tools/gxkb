@@ -36,6 +36,7 @@ typedef struct
 {
     gchar                *group_name;
     gchar                *variant;
+    gchar                *pretty_layout_name;
 } t_group_data;
 
 typedef struct
@@ -87,6 +88,32 @@ void                xkb_config_restore_maps             ( GHashTable *window_map
                                                           GHashTable *application_map );
 
 /* ---------------------- implementation ------------------------- */
+gchar *
+xkb_config_xkb_description( XklConfigItem *config_item )
+{
+    gchar *ci_description = g_strstrip( config_item->description );
+    if( ci_description[0] == 0 )
+        return g_strdup( config_item->name );
+
+    return g_strdup( ci_description );
+}
+
+gchar*
+xkb_config_create_pretty_layout_name( XklConfigRegistry *registry,
+                                      XklConfigItem     *config_item,
+                                      gchar             *layout_name,
+                                      gchar             *layout_variant )
+{
+    g_snprintf( config_item->name, sizeof( config_item->name ), "%s", layout_variant );
+    if( xkl_config_registry_find_variant( registry, layout_name, config_item ) )
+        return g_strdup( xkb_config_xkb_description( config_item ) );
+
+    g_snprintf ( config_item->name, sizeof( config_item->name ), "%s", layout_name );
+    if( xkl_config_registry_find_layout( registry, config_item ) )
+        return g_strdup( xkb_config_xkb_description( config_item ) );
+
+    return g_strdup( g_ascii_strup( xkb_util_get_layout_string( layout_name, layout_variant ), -1 ) );
+}
 
 gboolean
 xkb_config_initialize( t_xkb_settings *settings,
@@ -150,7 +177,6 @@ xkb_config_initialize_xkb_options( t_xkb_settings *settings )
 {
     XklConfigRegistry *registry;
     XklConfigItem *config_item;
-    GHashTable *index_variants;
     gchar **group;
     gint val, i;
     gpointer pval;
@@ -171,48 +197,25 @@ xkb_config_initialize_xkb_options( t_xkb_settings *settings )
                                                    config->group_count  );
 
     registry = xkl_config_registry_get_instance( config->engine );
-
-#if LIBXKLAVIER_VERSION >= 40
     xkl_config_registry_load( registry, FALSE );
-#else
-    xkl_config_registry_load( registry );
-#endif
-
-    g_object_unref( registry );
-
     config_item = xkl_config_item_new();
-
-    index_variants = g_hash_table_new( g_str_hash, g_str_equal );
 
     for( i = 0; i < config->group_count; i++ )
     {
         t_group_data *group_data = &config->group_data[i];
         group_data->group_name = g_strdup( config->config_rec->layouts[i] );
-
-        if( config->config_rec->variants[i] != NULL )
-        {
-            g_stpcpy( config_item->name, config->config_rec->variants[i] );
-        }
         group_data->variant = ( config->config_rec->variants[i] == NULL )
                               ? g_strdup( "" )
                               : g_strdup( config->config_rec->variants[i] );
-
-        pval = g_hash_table_lookup(
-            index_variants,
-            group_data->group_name
-        );
-
-        val = ( pval != NULL ) ? GPOINTER_TO_INT( pval ) : 0;
-        val++;
-
-        g_hash_table_replace(
-            index_variants,
+        group_data->pretty_layout_name = xkb_config_create_pretty_layout_name(
+            registry,
+            config_item,
             group_data->group_name,
-            GINT_TO_POINTER( val )
+            group_data->variant
         );
     }
-    g_hash_table_destroy( index_variants );
     g_object_unref( config_item );
+    g_object_unref( registry );
 }
 
 void
@@ -246,6 +249,7 @@ xkb_config_free( void )
             t_group_data *group_data = &config->group_data[i];
             g_free( group_data->group_name );
             g_free( group_data->variant );
+            g_free( group_data->pretty_layout_name );
         }
         g_free( config->group_data );
     }
@@ -255,11 +259,7 @@ xkb_config_free( void )
 void
 xkb_config_finalize( void )
 {
-#if LIBXKLAVIER_VERSION >= 50
     xkl_engine_stop_listen( config->engine, XKLL_TRACK_KEYBOARD_STATE );
-#else
-    xkl_engine_stop_listen( config->engine );
-#endif
 
     g_object_unref( config->config_rec );
 
@@ -349,7 +349,7 @@ xkb_config_backup_maps( GHashTable *window_map, GHashTable *application_map )
 void
 xkb_config_restore_maps( GHashTable *window_map, GHashTable *application_map )
 {
-    g_assert( config   != NULL );
+    g_assert( config != NULL );
 
     gpointer pval;
     GHashTable *index_variants = g_hash_table_new( g_str_hash, g_str_equal );
@@ -670,13 +670,13 @@ xkb_config_get_group_name( gint group )
 {
     g_assert( config != NULL );
 
-    if( G_UNLIKELY( group >= config->group_count ) )
-        return NULL;
-
     if( group == -1 )
         group = xkb_config_get_current_group();
 
-    return config->group_data[group].group_name;
+    if( G_UNLIKELY( group < 0 || group >= config->group_count ) )
+        return NULL;
+
+    return g_strdup( config->group_data[group].group_name );
 }
 
 const gchar*
@@ -684,13 +684,27 @@ xkb_config_get_variant( gint group )
 {
     g_assert( config != NULL );
 
-    if( G_UNLIKELY( group >= config->group_count ) )
+    if( group == -1 )
+        group = xkb_config_get_current_group();
+
+    if( G_UNLIKELY( group < 0 || group >= config->group_count ) )
         return NULL;
+
+    return g_strdup( config->group_data[group].variant );
+}
+
+const gchar*
+xkb_config_get_pretty_layout_name( gint group )
+{
+    g_assert( config != NULL );
 
     if( group == -1 )
         group = xkb_config_get_current_group();
 
-    return config->group_data[group].variant;
+    if( G_UNLIKELY( group < 0 || group >= config->group_count ) )
+        return NULL;
+
+    return g_strdup( config->group_data[group].pretty_layout_name );
 }
 
 void

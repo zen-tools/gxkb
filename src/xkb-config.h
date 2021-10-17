@@ -29,6 +29,8 @@
 #include <glib.h>
 #include <libxklavier/xklavier.h>
 
+#include "xkb-util.h"
+
 typedef enum
 {
     GROUP_POLICY_GLOBAL             = 0,
@@ -73,6 +75,8 @@ gint              xkb_config_get_group_count              ( void );
 const gchar      *xkb_config_get_group_name               ( gint group );
 
 const gchar      *xkb_config_get_variant                  ( gint group );
+
+const gchar      *xkb_config_get_pretty_layout_name       ( gint group );
 
 gboolean          xkb_config_set_group                    ( gint group );
 

@@ -150,7 +150,7 @@ statusicon_update_current_image( void )
         }
 
         gtk_status_icon_set_from_pixbuf( trayicon, pixmap );
-        gtk_status_icon_set_tooltip_text( trayicon, g_ascii_strup( group_name, -1 ) );
+        gtk_status_icon_set_tooltip_text( trayicon, g_strdup( gettext( xkb_config_get_pretty_layout_name( -1 ) ) ) );
     }
     else if( icon_type == APPINDICATOR )
     {
@@ -175,18 +175,12 @@ statusicon_update_menu( void )
 
     for( i = 0; i < xkb_config_get_group_count(); i++ )
     {
-        gchar *layout_string = NULL;
-
         gchar *imgfilename = xkb_util_get_flag_filename( xkb_config_get_group_name( i ),
                                                          xkb_config_get_variant( i ) );
         GdkPixbuf *handle = gdk_pixbuf_new_from_file_at_scale( imgfilename, width, height, TRUE, NULL );
         g_free( imgfilename );
 
-        layout_string = xkb_util_get_layout_string( xkb_config_get_group_name( i ),
-                                                    xkb_config_get_variant( i ) );
-
-        layout_string = g_ascii_strup( layout_string, -1 );
-
+        gchar *layout_string = g_strdup( gettext( xkb_config_get_pretty_layout_name( i ) ) );
         GtkWidget *menu_item = gtk_image_menu_item_new_with_label( layout_string );
         g_free( layout_string );
 

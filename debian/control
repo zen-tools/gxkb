@@ -15,6 +15,7 @@ Vcs-Browser: https://github.com/zen-tools/gxkb
 Package: gxkb
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: xkb-data
 Description: X11 keyboard indicator and switcher
  gxkb is a little indicator applet which allows one to quickly
  switch between different keyboard layouts in X. A flag
