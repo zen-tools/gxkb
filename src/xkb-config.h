@@ -23,7 +23,7 @@
 #define _GXKB_CONFIG_H_
 
 #ifdef HAVE_CONFIG_H
-#   include "config.h"
+#include "config.h"
 #endif
 
 #include <glib.h>
@@ -31,64 +31,58 @@
 
 #include "xkb-util.h"
 
-typedef enum
-{
-    GROUP_POLICY_GLOBAL             = 0,
-    GROUP_POLICY_PER_WINDOW         = 1,
-    GROUP_POLICY_PER_APPLICATION    = 2
+typedef enum {
+  GROUP_POLICY_GLOBAL = 0,
+  GROUP_POLICY_PER_WINDOW = 1,
+  GROUP_POLICY_PER_APPLICATION = 2
 } t_group_policy;
 
-typedef struct
-{
-    gchar               *model;
-    gchar               *layouts;
-    gchar               *variants;
-    gchar               *toggle_option;
-    gchar               *compose_key_position;
+typedef struct {
+  gchar *model;
+  gchar *layouts;
+  gchar *variants;
+  gchar *toggle_option;
+  gchar *compose_key_position;
 } t_xkb_kbd_config;
 
-typedef struct
-{
-    t_group_policy      group_policy;
-    gint                default_group;
-    gboolean            never_modify_config;
-    t_xkb_kbd_config    *kbd_config;
+typedef struct {
+  t_group_policy group_policy;
+  gint default_group;
+  gboolean never_modify_config;
+  t_xkb_kbd_config *kbd_config;
 } t_xkb_settings;
 
-typedef void      (*XkbCallback)                          ( gint current_group,
-                                                            gboolean groups_changed,
-                                                            gpointer user_data );
+typedef void (*XkbCallback)(gint current_group, gboolean groups_changed,
+                            gpointer user_data);
 
-gboolean          xkb_config_initialize                   ( t_xkb_settings *settings,
-                                                            XkbCallback callback,
-                                                            gpointer data );
+gboolean xkb_config_initialize(t_xkb_settings *settings, XkbCallback callback,
+                               gpointer data);
 
-void              xkb_config_finalize                     ( void );
+void xkb_config_finalize(void);
 
-void              kbd_config_free                         ( t_xkb_kbd_config *kbd_config );
+void kbd_config_free(t_xkb_kbd_config *kbd_config);
 
-gboolean          xkb_config_update_settings              ( t_xkb_settings *settings,
-                                                            XklEngine *engine );
+gboolean xkb_config_update_settings(t_xkb_settings *settings,
+                                    XklEngine *engine);
 
-gint              xkb_config_get_group_count              ( void );
+gint xkb_config_get_group_count(void);
 
-const gchar      *xkb_config_get_group_name               ( gint group );
+const gchar *xkb_config_get_group_name(gint group);
 
-const gchar      *xkb_config_get_variant                  ( gint group );
+const gchar *xkb_config_get_variant(gint group);
 
-const gchar      *xkb_config_get_pretty_layout_name       ( gint group );
+const gchar *xkb_config_get_pretty_layout_name(gint group);
 
-gboolean          xkb_config_set_group                    ( gint group );
+gboolean xkb_config_set_group(gint group);
 
-gboolean          xkb_config_next_group                   ( void );
+gboolean xkb_config_next_group(void);
 
-gboolean          xkb_config_prev_group                   ( void );
+gboolean xkb_config_prev_group(void);
 
-void              xkb_config_window_changed               ( guint new_window_id,
-                                                            guint application_id );
+void xkb_config_window_changed(guint new_window_id, guint application_id);
 
-void              xkb_config_application_closed           ( guint application_id );
+void xkb_config_application_closed(guint application_id);
 
-void              xkb_config_window_closed                ( guint window_id );
+void xkb_config_window_closed(guint window_id);
 
 #endif

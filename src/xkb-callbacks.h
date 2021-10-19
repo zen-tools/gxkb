@@ -23,26 +23,24 @@
 #define _GXKB_CALLBACKS_H_
 
 #ifdef HAVE_CONFIG_H
-#   include "config.h"
+#include "config.h"
 #endif
 
-#include <libwnck/libwnck.h>
 #include "xkb-config.h"
+#include <libwnck/libwnck.h>
 
-void            xkb_active_window_changed       ( WnckScreen *screen,
-                                                  WnckWindow *previously_active_window,
-                                                  t_xkb_settings *xkb );
+void xkb_active_window_changed(WnckScreen *screen,
+                               WnckWindow *previously_active_window,
+                               t_xkb_settings *xkb);
 
-void            xkb_application_closed          ( WnckScreen *screen,
-                                                  WnckApplication *app,
-                                                  t_xkb_settings *xkb );
+void xkb_application_closed(WnckScreen *screen, WnckApplication *app,
+                            t_xkb_settings *xkb);
 
-void            xkb_window_closed               ( WnckScreen *screen,
-                                                  WnckWindow *window,
-                                                  t_xkb_settings *xkb );
+void xkb_window_closed(WnckScreen *screen, WnckWindow *window,
+                       t_xkb_settings *xkb);
 
-void            xkb_about                       ( void );
+void xkb_about(void);
 
-void            xkb_main_quit                   ( void );
+void xkb_main_quit(void);
 
 #endif
