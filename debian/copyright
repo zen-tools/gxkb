@@ -3,7 +3,7 @@ Upstream-Name: gxkb
 Source: https://github.com/zen-tools/gxkb
 
 Files: *
-Copyright: 2013-2017, Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
+Copyright: 2013-2021, Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>
 License: GPL-2.0+
 
 License: GPL-2.0+

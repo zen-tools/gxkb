@@ -1,6 +1,6 @@
 /* xkb-callbacks.h
  *
- * Copyright (C) 2016 Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
+ * Copyright (C) 2016 Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>
  *
  * Copyright (C) 2008 Alexander Iliev <sasoiliev@mamul.org>
  *

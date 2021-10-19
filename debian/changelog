@@ -2,20 +2,20 @@ gxkb (0.9.2) unstable; urgency=medium
 
   * Added flag for cz_qwerty layout.
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Tue, 04 May 2021 14:22:15 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Tue, 04 May 2021 14:22:15 +0300
 
 gxkb (0.9.1) unstable; urgency=medium
 
   * Changed the way how flag icons are looked up to support language variants.
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Sat, 24 Apr 2021 21:11:47 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sat, 24 Apr 2021 21:11:47 +0300
 
 gxkb (0.9.0) unstable; urgency=medium
 
   * Moved on GTK3
     thanks to Mateusz Łukasik <mati75@linuxmint.pl> for the patch
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Fri, 11 Dec 2020 15:02:03 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Fri, 11 Dec 2020 15:02:03 +0200
 
 gxkb (0.8.2) unstable; urgency=medium
 
@@ -24,21 +24,21 @@ gxkb (0.8.2) unstable; urgency=medium
   * Fixed recursion in xkb_config_xkl_state_changed
   * Merged ayatana-appindicator.patch from Debian
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Tue, 07 Jul 2020 11:33:56 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Tue, 07 Jul 2020 11:33:56 +0300
 
 gxkb (0.8.1) unstable; urgency=medium
 
   * Added icon cache for trayicon.
   * Loading images for systray icon without scaling applying.
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Wed, 09 Jan 2019 21:08:35 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Wed, 09 Jan 2019 21:08:35 +0200
 
 gxkb (0.8.0) unstable; urgency=medium
 
   * Added flag for cz_qwerty layout.
   * Fixed bug when gxkb rewrites xmodmap mappings if never_modify_config is set.
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Thu, 24 Aug 2017 13:46:38 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Thu, 24 Aug 2017 13:46:38 +0300
 
 gxkb (0.7.9) unstable; urgency=medium
 
@@ -46,13 +46,13 @@ gxkb (0.7.9) unstable; urgency=medium
   * Do not reset keyboard layout if new configuration contains the same keyboard layouts as in previous configuration.
   * Create config file at startup (fix regression).
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Mon, 20 Mar 2017 23:45:32 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Mon, 20 Mar 2017 23:45:32 +0200
 
 gxkb (0.7.8) unstable; urgency=medium
 
   * Fix segmentation fault at exit when gxkb.cfg is not exists
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Fri, 07 Oct 2016 21:15:02 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Fri, 07 Oct 2016 21:15:02 +0300
 
 gxkb (0.7.7) unstable; urgency=medium
 
@@ -61,7 +61,7 @@ gxkb (0.7.7) unstable; urgency=medium
   * Avoid overriding configuration if gxkb.cfg was changed
   * Updated link on the project home page
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Mon, 08 Aug 2016 17:51:05 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Mon, 08 Aug 2016 17:51:05 +0300
 
 gxkb (0.7.6) unstable; urgency=medium
 
@@ -72,14 +72,14 @@ gxkb (0.7.6) unstable; urgency=medium
   * Added tooltip for system trayicon
   * Restructuring of distributive
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Sun, 05 Apr 2015 16:23:48 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sun, 05 Apr 2015 16:23:48 +0300
 
 gxkb (0.7.5) unstable; urgency=low
 
   * Man page moved from 'debian' directory into separate 'man' directory to
     install it not only in the Debian distributive.
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Sat, 28 Mar 2015 15:48:28 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sat, 28 Mar 2015 15:48:28 +0200
 
 gxkb (0.7.4) unstable; urgency=low
 
@@ -89,26 +89,26 @@ gxkb (0.7.4) unstable; urgency=low
   * Added man page.
   * Added support for Clang C/C++ compiler.
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Sat, 28 Mar 2015 11:23:54 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sat, 28 Mar 2015 11:23:54 +0200
 
 gxkb (0.7.3) unstable; urgency=low
 
   * Fixed unexpected behavior of gxkb with A4tech KV-300H keyboard
     thanks to Andrey <absent@ngs.ru> for the patch
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Mon, 27 Oct 2014 21:22:08 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Mon, 27 Oct 2014 21:22:08 +0200
 
 gxkb (0.7.2) unstable; urgency=low
 
   * Fixed display of keyboard layout at startup in the fallback mode
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Sun, 05 Oct 2014 23:07:35 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sun, 05 Oct 2014 23:07:35 +0300
 
 gxkb (0.7.1) unstable; urgency=low
 
   * Fixed status icon display in fallback mode when used option 'never_modify_config=true'
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Sat, 04 Oct 2014 23:39:17 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sat, 04 Oct 2014 23:39:17 +0300
 
 gxkb (0.7.0) unstable; urgency=low
 
@@ -120,7 +120,7 @@ gxkb (0.7.0) unstable; urgency=low
   * Code refactor and minor fixes
   * Saved ability to build gxkb without the appindicator support (for old systems)
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Mon, 08 Sep 2014 22:57:18 +0300
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Mon, 08 Sep 2014 22:57:18 +0300
 
 gxkb (0.6.0) unstable; urgency=low
 
@@ -129,4 +129,4 @@ gxkb (0.6.0) unstable; urgency=low
   * add the Debian packaging files
   * by default installation prefix changed to /usr
 
- -- Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>  Wed, 10 Jul 2013 17:33:13 +0200
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Wed, 10 Jul 2013 17:33:13 +0200

@@ -1,8 +1,8 @@
 Source: gxkb
 Priority: optional
 Section: x11
-Maintainer: Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
-Uploaders: Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
+Maintainer: Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>
+Uploaders: Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>
 Build-Depends: libgtk-3-dev ( >= 3.14.0 ),
   libxklavier16 ( >= 5.0 ), libwnck-3-0 ( >= 3.4.9 ),
   libgtk-3-dev, libxklavier-dev (>= 5.0), libwnck-3-dev,

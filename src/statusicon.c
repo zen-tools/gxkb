@@ -1,6 +1,6 @@
 /* statusicon.c
  *
- * Copyright (C) 2016 Dmitriy Poltavchenko <poltavchenko.dmitriy@gmail.com>
+ * Copyright (C) 2016 Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

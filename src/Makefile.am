@@ -9,7 +9,7 @@ gxkb_SOURCES = gxkb.c                           \
                xkb-callbacks.c xkb-callbacks.h  \
                xkb-config.c xkb-config.h        \
                statusicon.c statusicon.h        \
-               xkb-util.c xkb-util.h
+               xkb-util.c xkb-util.h gettext.h
 gxkb_CFLAGS = -O2 @GTK_CFLAGS@ @GLIB_CFLAGS@ @LIBXKLAVIER_CFLAGS@ @LIBWNCK_CFLAGS@ @APPINDICATOR_CFLAGS@ -DFLAGSDIR=\"$(datadir)/gxkb/flags\" -DAPPICON=\"$(datadir)/gxkb/logo.png\"
 gxkb_LDADD = @GTK_LIBS@ @GLIB_LIBS@ @LIBXKLAVIER_LIBS@ @LIBWNCK_LIBS@ @APPINDICATOR_LIBS@
 
