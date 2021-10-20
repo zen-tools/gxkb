@@ -585,13 +585,29 @@ void xkb_config_xkl_state_changed(XklEngine *engine,
 }
 
 void xkb_config_xkl_config_changed(XklEngine *engine) {
+  gchar *previous_active_group_name = strdup(xkb_config_get_group_name(-1));
+
   kbd_config_free(config->settings->kbd_config);
   config->settings->kbd_config = NULL;
   xkb_config_update_settings(config->settings, engine);
 
-  if (config->callback != NULL)
+  // If group name for current window is mismatch, then it means previous
+  // group name is not exist in new configuration, let's reset it
+  if (g_strcmp0(previous_active_group_name, xkb_config_get_group_name(-1)))
+    xkb_config_set_group(0);
+
+  g_free(previous_active_group_name);
+
+  if (config->callback != NULL) {
+    // Notify main application that configuration was changed
     config->callback(xkb_config_get_current_group(), TRUE,
                      config->callback_data);
+
+    // Make main application think that current layout "changed"
+    // to force redraw current keyboard layout icon
+    config->callback(xkb_config_get_current_group(), FALSE,
+                     config->callback_data);
+  }
 }
 
 void xkb_config_xkl_new_device(XklEngine *engine, gpointer data) {
