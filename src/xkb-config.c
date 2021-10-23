@@ -96,6 +96,13 @@ gchar *xkb_config_create_pretty_layout_name(XklConfigRegistry *registry,
                                             XklConfigItem *config_item,
                                             gchar *layout_name,
                                             gchar *layout_variant) {
+  if (g_strcmp0(layout_name, "cz_qwerty") == 0) {
+    // cz_qwerty = pc+cz(qwerty)
+    // https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=514409
+    layout_name = "cz";
+    layout_variant = "qwerty";
+  }
+
   g_snprintf(config_item->name, sizeof(config_item->name), "%s",
              layout_variant);
   if (xkl_config_registry_find_variant(registry, layout_name, config_item))
