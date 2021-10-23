@@ -1,3 +1,12 @@
+gxkb (0.9.3) unstable; urgency=medium
+
+  * Added Esperanto flag.
+  * Dropped support of libxklavier < 4.0.
+  * Added localized language names into menu.
+  * Fixed a bug when gxkb stayed with a keyboard layout that was removed after executing setxkbmap command.
+
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Sat, 23 Oct 2021 23:01:13 +0300
+
 gxkb (0.9.2) unstable; urgency=medium
 
   * Added flag for cz_qwerty layout.
