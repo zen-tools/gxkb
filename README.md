@@ -1,5 +1,5 @@
 # **gxkb**
-[![Latest release](https://img.shields.io/github/release/zen-tools/gxkb.svg)](https://github.com/zen-tools/gxkb/releases) [![Build Status](https://travis-ci.org/zen-tools/gxkb.svg?branch=master)](https://travis-ci.org/zen-tools/gxkb)
+[![Latest release](https://img.shields.io/github/release/zen-tools/gxkb.svg)](https://github.com/zen-tools/gxkb/releases)
 
 `X11` keyboard layout indicator and switcher
 
@@ -7,9 +7,9 @@
 ![screenshot 2](https://zen-tools.github.io/gxkb/images/gxkb_tray_menu.png "gxkb menu")
 
 ## **Description**
-`gxkb` is a tiny indicator applet which allows to quickly switch between different keyboard layouts in `X`.  
-A flag corresponding to the country of the active layout is shown in the indicator area.  
-The applet is written in `C` and uses `GTK+` library and therefore does not depend on any `GNOME` components.  
+`gxkb` is a tiny indicator applet which allows to quickly switch between different keyboard layouts in `X`.
+A flag corresponding to the country of the active layout is shown in the indicator area.
+The applet is written in `C` and uses `GTK+` library and therefore does not depend on any `GNOME` components.
 
 ## **Dependencies**
 
