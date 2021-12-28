@@ -20,8 +20,8 @@ therefore does not depend on any GNOME components.
 .I \-v
 Print the version number of
 .B gxkb
-to the standard output stream and
-list of features that was builded with.
+to standard output and
+list the features that it was built with.
 .TP
 .I \-h
 Print a usage message briefly summarizing these
@@ -41,12 +41,12 @@ Directory with system-wide resources.
 .PP
 .I $XDG_CONFIG_HOME/gxkb/gxkb.cfg
 .IP
-Settings for the gxkb. If $XDG_CONFIG_HOME is either not set or empty,
+Settings for gxkb. If $XDG_CONFIG_HOME is either not set or empty,
 a default equal to $HOME/.config/gxkb/gxkb.cfg should be used. The
 configuration file should be created at first run and can be changed
-when gxkb is not running at this time. By the way configuration for
-gxkb can be changed on the fly with \fBsetxkbmap\fR(1) command and
-gxkb will update configuration file at exit.
+when gxkb is not running. The configuration for
+gxkb can be changed on the fly with the \fBsetxkbmap\fR(1) command, in
+which case gxkb will update its configuration file upon exit.
 .PP
 .I $XDG_DATA_HOME/gxkb/flags
 .IP
