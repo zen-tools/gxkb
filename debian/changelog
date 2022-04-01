@@ -1,3 +1,9 @@
+gxkb (0.9.4) unstable; urgency=medium
+
+  * Removed ru and by flags. #StandWithUkraine
+
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Fri, 01 Apr 2022 14:13:21 +0300
+
 gxkb (0.9.3) unstable; urgency=medium
 
   * Added Esperanto flag.

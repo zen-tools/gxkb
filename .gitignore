@@ -10,6 +10,7 @@ Makefile
 aclocal.m4
 compile
 configure
+configure~
 install-sh
 missing
 config.log

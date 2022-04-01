@@ -1,4 +1,4 @@
-AC_INIT([gxkb], [0.9.3], [dmytro.poltavchenko@gmail.com], [gxkb], [https://zen-tools.github.io/gxkb])
+AC_INIT([gxkb], [0.9.4], [dmytro.poltavchenko@gmail.com], [gxkb], [https://zen-tools.github.io/gxkb])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign ])
 AC_CONFIG_SRCDIR([src/gxkb.c])
 AC_CONFIG_HEADERS([src/config.h])
