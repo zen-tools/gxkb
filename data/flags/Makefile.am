@@ -2,6 +2,7 @@ imagesdir = @datarootdir@/gxkb/flags
 images_DATA =        \
     am.png           \
     bg.png           \
+    by.png           \
     cz.png           \
     cz_qwerty.png    \
     de.png           \
@@ -24,6 +25,7 @@ images_DATA =        \
     pl.png           \
     pt.png           \
     ro.png           \
+    ru.png           \
     se.png           \
     si.png           \
     sk.png           \
