@@ -116,41 +116,41 @@ Instead of `grp:alt_shift_toggle` you can use whatever the following command giv
 
 ## **Known issues**
 
-* Missing flags:
-  **Q**: _`gxkb` shows a white flag with "?" character instead of the flag of my country._
+* Missing flags:  
+  **Q**: _`gxkb` shows a white flag with "?" character instead of the flag of my country._  
   **A**: That means `gxkb` fails to find an image under `/usr/share/gxkb/flags/` directory.
   If the flag does not belong to the terrorist state, you can create a merge request
   or issue with proposition to add the flag into distributive. Also, you can
   override missing/system flags with your own images.
 
-* Custom flags:
-  **Q**: _How can I override the system flags with my own?_
+* Custom flags:  
+  **Q**: _How can I override the system flags with my own?_  
   **A**: You can place your own flags under `$XDG_DATA_HOME/gxkb/flags` directory.
   If the `XDG_DATA_HOME` environment variable is not defined,
   use `$HOME/.local/share/gxkb/flags` instead.
 
-* In Gnome2/Gnome3, Unity, E17, possibly in KDE3/KDE4:
-  **Q**: _The layout does not get changed properly while switching between windows._
+* In Gnome2/Gnome3, Unity, E17, possibly in KDE3/KDE4:  
+  **Q**: _The layout does not get changed properly while switching between windows._  
   **A**: In your DE settings find keyboard layout control settings, disable
   the inheriting of the layouts from parent window and disable splitting
   layouts between windows.
 
-* In Gnome3/Unity:
-  **Q**: _The layout icon is not displayed in system tray area._
+* In Gnome3/Unity:  
+  **Q**: _The layout icon is not displayed in system tray area._  
   **A**: Due to different versions of Gnome3 there is no easy answer, Google
   might help to find the right one.
   But in fact `gxkb` works under the hood, so you can use the Gnome3/Unity
   system indicators for icon displaying, just don't forget to disable the
   splitting layouts between different windows.
 
-* In XFCE 4.12:
-  **Q**: _The layout icon is not displayed in system tray area._
+* In XFCE 4.12:  
+  **Q**: _The layout icon is not displayed in system tray area._  
   **A**: In "sessions and startup" settings try to find and disable
   <code>indicator&#8209;application&#8209;service</code>.
   More details [here](https://forum.xfce.org/viewtopic.php?pid=32908#p32908).
 
-* In Unity + AppIndicator:
-  **Q**: _The layout switching does not work._
+* In Unity + AppIndicator:  
+  **Q**: _The layout switching does not work._  
   **A**: It can happen when the system layout switcher
   <code>indicator&#8209;keyboard</code> uses the same key combination.
   One possible solution to this may be to assign an unused key combination
