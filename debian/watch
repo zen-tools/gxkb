@@ -1,3 +1,5 @@
-version=3
-opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/gxkb-$1\.tar\.gz/ \
-  https://github.com/zen-tools/gxkb/releases .*/v?(\d[\d\.]*)\.tar\.gz
+version=4
+opts="searchmode=plain,\
+filenamemangle=s%.*/v?@ANY_VERSION@%@PACKAGE@-$1.tar.xz%" \
+https://api.github.com/repos/zen-tools/gxkb/releases?per_page=50 \
+https://api.github.com/repos/[^/]+/[^/]+/tarball/v?@ANY_VERSION@
