@@ -1,36 +1,100 @@
 imagesdir = @datarootdir@/gxkb/flags
 images_DATA =        \
+    af.png           \
+    al.png           \
     am.png           \
+    at.png           \
+    au.png           \
+    az.png           \
+    ba.png           \
+    bd.png           \
+    be.png           \
     bg.png           \
+    br.png           \
+    bt.png           \
+    bw.png           \
+    ca.png           \
+    cd.png           \
+    ch.png           \
+    cm.png           \
+    cn.png           \
     cz.png           \
     cz_qwerty.png    \
     de.png           \
+    dk.png           \
+    dz.png           \
     ee.png           \
+    eg.png           \
     epo.png          \
-    gb.png           \
     es.png           \
+    et.png           \
+    eu.png           \
     fi.png           \
+    fo.png           \
     fr.png           \
+    gb.png           \
     ge.png           \
+    gh.png           \
+    gn.png           \
     gr.png           \
     hr.png           \
     hu.png           \
+    id.png           \
+    ie.png           \
+    il.png           \
+    in.png           \
+    iq.png           \
+    ir.png           \
     is.png           \
     it.png           \
+    jp.png           \
+    ke.png           \
+    kg.png           \
+    kh.png           \
+    kr.png           \
     kz.png           \
+    la.png           \
+    lk.png           \
     lt.png           \
     lv.png           \
+    ma.png           \
+    md.png           \
+    me.png           \
+    mk.png           \
+    ml.png           \
+    mm.png           \
+    mn.png           \
+    mt.png           \
+    mv.png           \
+    my.png           \
+    ng.png           \
+    nl.png           \
     no.png           \
+    np.png           \
+    nz.png           \
+    ph.png           \
+    pk.png           \
     pl.png           \
     pt.png           \
     ro.png           \
+    rs.png           \
     se.png           \
     si.png           \
     sk.png           \
-    sr.png           \
+    sn.png           \
+    sy.png           \
+    tg.png           \
+    th.png           \
+    tj.png           \
+    tm.png           \
+    tr.png           \
+    tw.png           \
+    tz.png           \
     ua.png           \
     us.png           \
     uz.png           \
+    vn.png           \
+    za.png           \
     zz.png
 
 EXTRA_DIST = $(images_DATA)
