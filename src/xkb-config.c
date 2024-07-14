@@ -42,7 +42,6 @@ typedef struct {
   XklEngine *engine;
 
   t_group_data *group_data;
-
   t_xkb_settings *settings;
 
   GHashTable *application_map;
@@ -55,8 +54,9 @@ typedef struct {
   gint current_group;
 
   XkbCallback callback;
-
   gpointer callback_data;
+
+  guint config_changed_timeout_id;
 
   XklConfigRec *config_rec;
 } t_xkb_config;
@@ -67,9 +67,9 @@ void xkb_config_xkl_state_changed(XklEngine *engine,
                                   XklEngineStateChange *change, gint group,
                                   gboolean restore);
 
-void xkb_config_xkl_config_changed(XklEngine *engine);
+void xkb_config_xkl_config_changed(XklEngine *engine, t_xkb_config *config);
 
-void xkb_config_xkl_new_device(XklEngine *engine, gpointer data);
+void xkb_config_xkl_new_device(XklEngine *engine);
 
 GdkFilterReturn handle_xevent(GdkXEvent *xev, GdkEvent *event);
 
@@ -143,7 +143,7 @@ gboolean xkb_config_initialize(t_xkb_settings *settings, XkbCallback callback,
                    G_CALLBACK(xkb_config_xkl_state_changed), NULL);
 
   g_signal_connect(config->engine, "X-config-changed",
-                   G_CALLBACK(xkb_config_xkl_config_changed), NULL);
+                   G_CALLBACK(xkb_config_xkl_config_changed), config);
 
   g_signal_connect(config->engine, "X-new-device",
                    G_CALLBACK(xkb_config_xkl_new_device), NULL);
@@ -591,12 +591,13 @@ void xkb_config_xkl_state_changed(XklEngine *engine,
   }
 }
 
-void xkb_config_xkl_config_changed(XklEngine *engine) {
+static gboolean xkb_keyboard_xkl_config_changed_timeout (gpointer user_data) {
+  t_xkb_config *config = user_data;
   gchar *previous_active_group_name = strdup(xkb_config_get_group_name(-1));
 
   kbd_config_free(config->settings->kbd_config);
   config->settings->kbd_config = NULL;
-  xkb_config_update_settings(config->settings, engine);
+  xkb_config_update_settings(config->settings, config->engine);
 
   // If group name for current window is mismatch, then it means previous
   // group name is not exist in new configuration, let's reset it
@@ -615,9 +616,25 @@ void xkb_config_xkl_config_changed(XklEngine *engine) {
     config->callback(xkb_config_get_current_group(), FALSE,
                      config->callback_data);
   }
+
+  config->config_changed_timeout_id = 0;
+  return G_SOURCE_REMOVE;
 }
 
-void xkb_config_xkl_new_device(XklEngine *engine, gpointer data) {
+void xkb_config_xkl_config_changed(XklEngine *engine, t_xkb_config *config) {
+  // libxklavier may send default Xorg settings first,
+  // which leads to losing the actual keyboard layout settings.
+  // To avoid this, we run the callback with a delay.
+  // If there was already one scheduled, then we drop it.
+
+  if (config->config_changed_timeout_id != 0)
+    g_source_remove(config->config_changed_timeout_id);
+
+  config->config_changed_timeout_id = g_timeout_add(
+    100, xkb_keyboard_xkl_config_changed_timeout, config);
+}
+
+void xkb_config_xkl_new_device(XklEngine *engine) {
   if (!config->settings->never_modify_config)
     xkl_config_rec_activate(config->config_rec, engine);
 }
