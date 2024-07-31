@@ -1,3 +1,9 @@
+gxkb (0.9.6) unstable; urgency=medium
+
+  * Fixed an issue where Xorg reset keyboard layouts after connecting a Bluetooth device.
+
+ -- Dmytro Poltavchenko <dmytro.poltavchenko@gmail.com>  Wed, 31 Jul 2024 21:14:18 +0300
+
 gxkb (0.9.5) unstable; urgency=medium
 
   * Added 65 new country flags.
